@@ -66,7 +66,7 @@ let g:gv_rvm_hack = 1
 
 ### Completion <a id="completion"></a>
 
-Gulp-vim searches for a *gulpfile.js* in the current vim directory (`:pwd`) then extract from it task names to provide command completion.
+Gulp-vim searches for a *gulpfile.js* in the current vim directory (`:pwd`) then extract from it task names to provide command completion (This method is quicker than using `gulp --tasks-simple`).
 
 TODO
 -----
