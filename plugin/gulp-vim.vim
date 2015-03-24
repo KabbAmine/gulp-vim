@@ -1,7 +1,7 @@
 " A simple gulp wrapper for vim
 " Version     : 0.1
 " Creation    : 2015-03-18
-" Last Change : 2015-03-21
+" Last Change : 2015-03-24
 " Maintainer  : Kabbaj Amine <amine.kabb@gmail.com>
 " License     : This file is placed in the public domain.
 
@@ -42,12 +42,12 @@ let s:rvmHack = exists('g:gv_rvm_hack') ? '[[ -s "$HOME/.rvm/scripts/rvm" ]] && 
 " Command line for executing external terminal {{{1
 let s:termCmd = {
 			\ 'unix': {
-				\ 'h': ' exo-open --launch TerminalEmulator ',
+				\ 'h': 'exo-open --launch TerminalEmulator ',
 				\ 'b': ' bash -c "' . s:rvmHack,
 				\ 't': ' ; exec bash" & '
 			\ },
 			\ 'win32': {
-				\ 'h': ' start cmd /k ',
+				\ 'h': 'start cmd /k ',
 				\ 'b': '',
 				\ 't': ' & '
 			\ }
