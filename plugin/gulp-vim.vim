@@ -1,7 +1,7 @@
 " A simple gulp wrapper for vim
-" Version     : 0.1
+" Version     : 0.2
 " Creation    : 2015-03-18
-" Last Change : 2015-03-24
+" Last Change : 2015-05-08
 " Maintainer  : Kabbaj Amine <amine.kabb@gmail.com>
 " License     : This file is placed in the public domain.
 
@@ -39,15 +39,27 @@ let s:gulpCliFlags = has('gui_running') ? ' --no-color' : ''
 " Rvm hack for unix (Source rvm script file if it exists when using an external terminal) {{{1
 " http://stackoverflow.com/a/8493284
 let s:rvmHack = exists('g:gv_rvm_hack') ? '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" && ' : ''
+" Return to prompt option {{{1
+if exists('g:gv_return_2_prompt')
+	let s:prompt = {
+				\ 'unix': ' exec bash',
+				\ 'win32': ' /k'
+				\ }
+else
+	let s:prompt = {
+				\ 'unix': '',
+				\ 'win32': ' /c'
+				\ }
+endif
 " Command line for executing external terminal {{{1
 let s:termCmd = {
 			\ 'unix': {
 				\ 'h': 'exo-open --launch TerminalEmulator ',
 				\ 'b': ' bash -c "' . s:rvmHack,
-				\ 't': ' ; exec bash" & '
+				\ 't': ' ; ' . s:prompt.unix . '" & '
 			\ },
 			\ 'win32': {
-				\ 'h': 'start cmd /k ',
+				\ 'h': 'start cmd ' . s:prompt.win32 . ' ',
 				\ 'b': '',
 				\ 't': ' & '
 			\ }
