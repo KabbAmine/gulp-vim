@@ -68,11 +68,21 @@ let g:gv_rvm_hack = 1
 
 Gulp-vim searches for a *gulpfile.js* in the current vim directory (`:pwd`) then extract from it task names to provide command completion (This method is quicker than using `gulp --tasks-simple`).
 
+### Return to the shell prompt
+
+By default with `GulpExt`, when the gulp task is completed, the terminal is closed.
+If you want to return to the shell prompt after executing the task, add to your vimrc:
+
+```
+let g:gv_return_2_prompt = 1
+```
+
 TODO
 -----
 
-- :white_medium_square: Possibility to define custom terminal.
-- :white_medium_square: Support other gulpfile(s?) if needed (gulpfile.coffee?).
+- [ ] Add doc file.
+- [ ] Possibility to define custom terminal if needed.
+- [ ] Support other gulpfile(s?) if needed (gulpfile.coffee?).
 
 NOTES
 -----
