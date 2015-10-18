@@ -1,5 +1,5 @@
 " A simple gulp wrapper for vim
-" Version     : 0.2
+" Version     : 0.5
 " Creation    : 2015-03-18
 " Last Change : 2015-10-18
 " Maintainer  : Kabbaj Amine <amine.kabb@gmail.com>
