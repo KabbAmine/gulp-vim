@@ -1,0 +1,96 @@
+*gulp-vim*      Simply Gulp from Vim
+
+    For Vim version 7.0 and above       Last change: 2015-10-18
+
+    GULP-VIM - FULL-SCREEN MODE FOR VIM IN GNU/LINUX~
+                                        from Kabbaj Amine~
+
+Mail    : amine.kabb@gmail.com
+Repo    : https://github.com/KabbAmine/gulp-vim.vim
+License : This file is placed in the public domain.
+
+========================================================================
+|CONTENTS|                              *gulp-vim-contents*
+
+1. Description                                  |gulp-vim-description|
+2. Installation                                 |gulp-vim-installation|
+3. Usage                                        |gulp-vim-usage|
+4. Extra                                        |gulp-vim-extra|
+  4.1. Rvm hack                                 |gulp-vim-extra:rvm_hack|
+  4.2. Completion                               |gulp-vim-extra:completion|
+  4.3. Return to the shell prompt               |gulp-vim-extra:shell_prompt|
+5. NOTES                                        |gulp-vim-notes|
+
+--------------------------------------------------------------------------------
+DESCRIPTION                                                 *gulp-vim-description*
+
+This plugin is a simple gulp (http://gulpjs.com) wrapper for vim (Tested on GNU/Linux and Windows)
+
+--------------------------------------------------------------------------------
+INSTALLATION                                               *gulp-vim-installation*
+
+MANUALLY                                                   *gulp-vim-manually*
+
+Install the distributed files into Vim runtime directory which is usually `~/.vim/`, or `$HOME/vimfiles` on Windows.
+
+USING A PLUGIN MANAGER                           *gulp-vim-using_a_plugin_manager*
+
+And this is the recommended way, use a vim plugin manager:
+
+* Vim-plug (https://github.com/junegunn/vim-plug)
+* Vundle (https://github.com/gmarik/Vundle.vim)
+* NeoBundle (https://github.com/Shougo/neobundle.vim)
+
+--------------------------------------------------------------------------------
+USAGE                                                           *gulp-vim-usage*
+
+Gulp-vim provides 2 main commands: `Gulp` and `GulpExt`.
+Both commands accept 0 or many arguments (Task name(s)), that can be completed using `<Tab>`).
+>
+  Gulp {task(s)...}
+<
+Execute `Gulp` inside Vim, with given task name(s) (If no task name was given `default` is used).
+>
+  GulpExt {task(s)...}
+<
+Open an external terminal (The default one via `exo-open` in GNU/Linux and a simple `cmd` in Windows) then execute `Gulp` with the given task name(s) (If no task name was given `default` is used).
+>
+  GulpTasks
+>
+Shows a list of your gulp task names (Extracted from current `gulpfile.js`).
+
+--------------------------------------------------------------------------------
+EXTRA                                                             *gulp-vim-extra*
+
+RVM HACK
+*gulp-vim-extra:rvm_hack*
+
+If you're using rvm (https://rvm.io/) in GNU/Linux, when using `GulpExt` and opening a new terminal window, rvm shell functions may not be exported so your gems and some gulp plugins will not work (`gulp-compass` as an example).
+
+To get rid of that add to your vimrc:
+>
+  let g:gv_rvm_hack = 1
+<
+COMPLETION                                                  *gulp-vim-extra:completion*
+
+The plugin searches for a gulpfile.js in the current vim directory (`:pwd`)
+then extract from it task names to provide command completion.
+
+RETURN TO THE SHELL PROMPT                   *gulp-vim-extra:shell_prompt*
+
+By default with `GulpExt`, when the gulp task is completed, the terminal is closed.
+If you want to go back to the shell prompt after executing the task, add to your vimrc:
+>
+  let g:gv_return_2_prompt = 1
+<
+--------------------------------------------------------------------------------
+NOTES                                                             *gulp-vim-notes*
+
+Thanks to gulp author(s).
+
+Thanks to Bram Moolenaar for creating the best piece of software in the world :D
+
+Thanks to you if you're using gulp-vim.
+
+========================================================================
+vim:tw=80:ts=8:ft=help:norl:noet
