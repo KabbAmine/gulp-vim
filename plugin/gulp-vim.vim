@@ -1,7 +1,7 @@
 " A simple gulp wrapper for vim
 " Version     : 0.2
 " Creation    : 2015-03-18
-" Last Change : 2015-08-22
+" Last Change : 2015-10-18
 " Maintainer  : Kabbaj Amine <amine.kabb@gmail.com>
 " License     : This file is placed in the public domain.
 
@@ -112,7 +112,7 @@ function s:ExecCmd(funName, action, ...) " {{{1
 			exec call(a:funName, l:args)
 		endif
 	else
-		echo 'No gulpfile.js in the current directory'
+		echohl Error | echo 'No gulpfile.js in the current directory' | echohl None
 	endif
 endfunction
 function s:CompleteTaskNames(A, L, P) " {{{1
