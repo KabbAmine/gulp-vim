@@ -1,7 +1,7 @@
 " A simple gulp wrapper for vim
 " Version     : 0.5
 " Creation    : 2015-03-18
-" Last Change : 2015-10-18
+" Last Change : 2015-10-20
 " Maintainer  : Kabbaj Amine <amine.kabb@gmail.com>
 " License     : This file is placed in the public domain.
 
@@ -24,10 +24,15 @@ set cpoptions&vim
 command -nargs=* -complete=custom,s:CompleteTaskNames Gulp :call s:ExecCmd('s:Gulp', 'e', <f-args>)
 command -nargs=* -complete=custom,s:CompleteTaskNames GulpExt :call s:ExecCmd('s:GulpExternal', 'c', <f-args>)
 command GulpTasks :call s:ExecCmd('s:GetTaskNames', 'e')
+command -nargs=? -complete=file GulpFile :call s:Gulpfile(<f-args>)
 " }}}
 
 " VARIABLES
 " =====================================================================
+" Default gulpfile {{{1
+if !exists('g:gv_default_gulpfile')
+	let g:gv_default_gulpfile = 'gulpfile.js'
+endif
 " Get used OS & dir separator {{{1
 if has('unix')
 	let s:os = 'unix' | let s:sep = '/'
@@ -68,13 +73,21 @@ let s:termCmd = {
 
 " FUNCTIONS
 " =====================================================================
-function s:HasGulpfile() " {{{1
-	return filereadable(getcwd() . s:sep . 'gulpfile.js')
+function s:Gulpfile(...) "{{{1
+	let l:gf = exists('a:1') ? a:1 : 'gulpfile.js'
+	if l:gf !~# '^gulpfile'
+		echohl Error | echo l:gf . ' is not a valid gulpfile' | echohl None
+		return 0
+	else
+		let g:gv_default_gulpfile = l:gf
+		return filereadable(getcwd() . s:sep . l:gf)
+	endif
 endfunction
 function s:Gulp(...) " {{{1
 	" Return gulp execution with given param(s) as task name(s) (By default is 'default' :D)
 
 	let l:tasks = a:0 >=# 1 ? join(a:000, ' ') : 'default'
+	echohl Title | echo 'Execute task(s) -> ' . l:tasks . ':' | echohl None
 	return system('gulp ' . l:tasks . s:gulpCliFlags)
 endfunction
 function s:GulpExternal(...) " {{{1
@@ -84,39 +97,40 @@ function s:GulpExternal(...) " {{{1
 	return 'silent :!' . s:termCmd[s:os].h . s:termCmd[s:os].b . 'gulp ' . l:tasks . s:termCmd[s:os].t
 endfunction
 function s:GetTaskNames() " {{{1
-	" Return task names as strings from gulpfile.js
+	" Return task names as strings from gulpfile
 
 	let l:tasks = []
-	for l:line in readfile('gulpfile.js')
-		" Get only lines with gulp.task
+	for l:line in readfile(g:gv_default_gulpfile)
 		if l:line =~# '^gulp.task'
 			" Get task name & add it to a list of tasks
 			let l:task = l:line[match(l:line, "'", 0, 1) + 1 : match(l:line, "'", 0, 2) - 1]
 			call add(l:tasks, l:task)
 		endif
 	endfor
-	return join(l:tasks, "\n") . "\n"
+	let l:taskMsg = len(l:tasks) ==# 1 ? '(1 task)' : '(' . len(l:tasks) . ' tasks)'
+	echohl Title | echo g:gv_default_gulpfile . ' ' . l:taskMsg . ':' | echohl None
+	return join(l:tasks, "\n")
 
 endfunction
 " }}}
 function s:ExecCmd(funName, action, ...) " {{{1
 	" Automate the vim command creation:
-	"	- Check gulpfile presence
+	"	- Check if gulpfile is readable
 	"	- Echo or execute when needed
 
 	let l:args = exists('a:000') ? a:000 : []
-	if s:HasGulpfile()
+	if s:Gulpfile(g:gv_default_gulpfile)
 		if a:action ==# 'e'
 			echo call(a:funName, l:args)
 		else
-			exec call(a:funName, l:args)
+			call call(a:funName, l:args)
 		endif
 	else
-		echohl Error | echo 'No gulpfile.js in the current directory' | echohl None
+		echohl Error | echo 'No valid gulpfile in the current directory' | echohl None
 	endif
 endfunction
 function s:CompleteTaskNames(A, L, P) " {{{1
-	if s:HasGulpfile()
+	if s:Gulpfile(g:gv_default_gulpfile)
 		return s:GetTaskNames()
 	endif
 endfunction
