@@ -1,6 +1,6 @@
 *gulp-vim*      Simply Gulp from Vim
 
-    For Vim version 7.0 and above       Last change: 2015-10-18
+For Vim version 7.0 and above       Last change: 2015-10-22
 
     GULP-VIM - FULL-SCREEN MODE FOR VIM IN GNU/LINUX~
                                         from Kabbaj Amine~
@@ -15,25 +15,29 @@ License : This file is placed in the public domain.
 1. Description                                  |gulp-vim-description|
 2. Installation                                 |gulp-vim-installation|
 3. Usage                                        |gulp-vim-usage|
-4. Extra                                        |gulp-vim-extra|
-  4.1. Rvm hack                                 |gulp-vim-extra:rvm_hack|
-  4.2. Completion                               |gulp-vim-extra:completion|
-  4.3. Return to the shell prompt               |gulp-vim-extra:shell_prompt|
-5. NOTES                                        |gulp-vim-notes|
+  3.1. Main commands                            |gulp-vim-usage:main|
+  3.3. Misc                                     |gulp-vim-usage:|misc|
+4. Configuration                                |gulp-vim-configuration|
+  4.1. Rvm hack                                 |gulp-vim-configuration:rvm_hack|
+  4.3. Go back to the shell prompt              |gulp-vim-configuration:shell_prompt|
+  4.3. Specify gulpfile                         |gulp-vim-configuration:gulpfile|
+5. Extra                                        |gulp-vim-extra|
+  5.1. Completion                               |gulp-vim-extra:completion|
+6. NOTES                                        |gulp-vim-notes|
 
 --------------------------------------------------------------------------------
-DESCRIPTION                                                 *gulp-vim-description*
+DESCRIPTION                                     *gulp-vim-description*
 
 This plugin is a simple gulp (http://gulpjs.com) wrapper for vim (Tested on GNU/Linux and Windows)
 
 --------------------------------------------------------------------------------
-INSTALLATION                                               *gulp-vim-installation*
+INSTALLATION                                    *gulp-vim-installation*
 
-MANUALLY                                                   *gulp-vim-manually*
+# MANUALLY
 
 Install the distributed files into Vim runtime directory which is usually `~/.vim/`, or `$HOME/vimfiles` on Windows.
 
-USING A PLUGIN MANAGER                           *gulp-vim-using_a_plugin_manager*
+# USING A PLUGIN MANAGER
 
 And this is the recommended way, use a vim plugin manager:
 
@@ -42,7 +46,9 @@ And this is the recommended way, use a vim plugin manager:
 * NeoBundle (https://github.com/Shougo/neobundle.vim)
 
 --------------------------------------------------------------------------------
-USAGE                                                           *gulp-vim-usage*
+USAGE                                           *gulp-vim-usage*
+
+MAIN COMMANDS                                   *gulp-vim-usage:main*
 
 Gulp-vim provides 2 main commands: `Gulp` and `GulpExt`.
 Both commands accept 0 or many arguments (Task name(s)), that can be completed using `<Tab>`).
@@ -54,16 +60,22 @@ Execute `Gulp` inside Vim, with given task name(s) (If no task name was given `d
   GulpExt {task(s)...}
 <
 Open an external terminal (The default one via `exo-open` in GNU/Linux and a simple `cmd` in Windows) then execute `Gulp` with the given task name(s) (If no task name was given `default` is used).
+
+MISC                                            *gulp-vim-usage:misc*
 >
   GulpTasks
+
+Shows a list of your gulp task names (Extracted from the current `gulpfile`).
 >
-Shows a list of your gulp task names (Extracted from current `gulpfile.js`).
+  GulpFile [gulpfile]
+
+Define the `gulpfile` to use, e.g. `gulpfile.js`, `gulpfile.coffee`, `gulpfile.babel.js` (Set it to `gulpfile.js` when used without argument).
+In fact, this command just assign a value to `g:gv_default_gulpfile`.
 
 --------------------------------------------------------------------------------
-EXTRA                                                             *gulp-vim-extra*
+CONFIGURATION                                   *gulp-vim-configuration*
 
-RVM HACK
-*gulp-vim-extra:rvm_hack*
+RVM HACK                                        *gulp-vim-configuration:rvm_hack*
 
 If you're using rvm (https://rvm.io/) in GNU/Linux, when using `GulpExt` and opening a new terminal window, rvm shell functions may not be exported so your gems and some gulp plugins will not work (`gulp-compass` as an example).
 
@@ -71,20 +83,33 @@ To get rid of that add to your vimrc:
 >
   let g:gv_rvm_hack = 1
 <
-COMPLETION                                                  *gulp-vim-extra:completion*
-
-The plugin searches for a gulpfile.js in the current vim directory (`:pwd`)
-then extract from it task names to provide command completion.
-
-RETURN TO THE SHELL PROMPT                   *gulp-vim-extra:shell_prompt*
+GO BACK TO THE SHELL PROMPT                     *gulp-vim-configuration:shell_prompt*
 
 By default with `GulpExt`, when the gulp task is completed, the terminal is closed.
 If you want to go back to the shell prompt after executing the task, add to your vimrc:
 >
   let g:gv_return_2_prompt = 1
 <
+SPECIFY GULPFILE                                *gulp-vim-configuration:gulpfile*
+
+You can specify the gulpfile to use with `g:gv_default_gulpfile` variable (By default, it's `gulpfile.js`).
+
+e.g.
+>
+  let g:gv_default_gulpfile = 'gulpfile.coffee'
+  " Or
+  let g:gv_default_gulpfile = 'gulpfile.babel.js'
+
 --------------------------------------------------------------------------------
-NOTES                                                             *gulp-vim-notes*
+|EXTRA|                                           *gulp-vim-extra*
+
+COMPLETION                                      *gulp-vim-extra:completion*
+
+The plugin searches for a gulpfile (`g:gv_default_gulpfile`) in the current vim directory (`:pwd`)
+then extract from it task names to provide command completion.
+
+--------------------------------------------------------------------------------
+NOTES                                           *gulp-vim-notes*
 
 Thanks to gulp author(s).
 
