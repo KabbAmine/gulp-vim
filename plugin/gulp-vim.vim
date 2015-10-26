@@ -1,7 +1,7 @@
 " A simple gulp wrapper for vim
 " Version     : 0.6
 " Creation    : 2015-03-18
-" Last Change : 2015-10-20
+" Last Change : 2015-10-26
 " Maintainer  : Kabbaj Amine <amine.kabb@gmail.com>
 " License     : This file is placed in the public domain.
 
@@ -123,7 +123,8 @@ function s:ExecCmd(funName, action, ...) " {{{1
 		if a:action ==# 'e'
 			echo call(a:funName, l:args)
 		else
-			call call(a:funName, l:args)
+			execute call(a:funName, l:args)
+			execute 'redraw!'
 		endif
 	else
 		echohl Error | echo 'No valid gulpfile in the current directory' | echohl None
