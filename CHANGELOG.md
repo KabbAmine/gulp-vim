@@ -3,6 +3,22 @@ CHANGELOG
 
 ------------------------------
 
+v0.6.2 <small>(2015-10-27)</small>
+------------------------------
+
+### Fixes
+
+* Fix GulpExt command
+* Fix redrawing issue
+
+### Features
+
+* Add Dispatch integration (`g:gv_use_dispatch`)
+
+------------------------------
+
+------------------------------
+
 v0.6 <small>(2015-10-22)</small>
 ------------------------------
 
