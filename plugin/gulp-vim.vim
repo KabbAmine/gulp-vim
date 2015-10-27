@@ -1,7 +1,7 @@
 " A simple gulp wrapper for vim
 " Version     : 0.6
 " Creation    : 2015-03-18
-" Last Change : 2015-10-26
+" Last Change : 2015-10-27
 " Maintainer  : Kabbaj Amine <amine.kabb@gmail.com>
 " License     : This file is placed in the public domain.
 
@@ -44,6 +44,10 @@ let s:gulpCliFlags = has('gui_running') ? ' --no-color' : ''
 " Rvm hack for unix (Source rvm script file if it exists when using an external terminal) {{{1
 " http://stackoverflow.com/a/8493284
 let s:rvmHack = exists('g:gv_rvm_hack') ? '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" && ' : ''
+" Use Dispatch plugin (Enabled by default) {{{1
+if !exists('g:gv_use_dispatch')
+	let g:gv_use_dispatch = 1
+endif
 " Return to prompt option {{{1
 if exists('g:gv_return_2_prompt')
 	let s:prompt = {
@@ -94,7 +98,11 @@ function s:GulpExternal(...) " {{{1
 	" Return gulp execution with given param(s) as task name(s) in external terminal.
 
 	let l:tasks = a:0 >=# 1 ? join(a:000, ' ') : 'default'
-	return 'silent :!' . s:termCmd[s:os].h . s:termCmd[s:os].b . 'gulp ' . l:tasks . s:termCmd[s:os].t
+	if g:gv_use_dispatch && exists(':Start')
+		return printf('Start! gulp %s', l:tasks)
+	else
+		return 'silent :!' . s:termCmd[s:os].h . s:termCmd[s:os].b . 'gulp ' . l:tasks . s:termCmd[s:os].t
+	endif
 endfunction
 function s:GetTaskNames() " {{{1
 	" Return task names as strings from gulpfile
