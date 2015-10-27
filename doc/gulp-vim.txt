@@ -1,6 +1,6 @@
 *gulp-vim*      Simply Gulp from Vim
 
-For Vim version 7.0 and above       Last change: 2015-10-22
+For Vim version 7.0 and above       Last change: 2015-10-27
 
     GULP-VIM - FULL-SCREEN MODE FOR VIM IN GNU/LINUX~
                                         from Kabbaj Amine~
@@ -21,6 +21,7 @@ License : This file is placed in the public domain.
   4.1. Rvm hack                                 |gulp-vim-configuration:rvm_hack|
   4.3. Go back to the shell prompt              |gulp-vim-configuration:shell_prompt|
   4.3. Specify gulpfile                         |gulp-vim-configuration:gulpfile|
+  4.4. Use Dispatch                             |gulp-vim-configuration:dispatch|
 5. Extra                                        |gulp-vim-extra|
   5.1. Completion                               |gulp-vim-extra:completion|
 6. NOTES                                        |gulp-vim-notes|
@@ -32,6 +33,8 @@ This plugin is a simple gulp (http://gulpjs.com) wrapper for vim (Tested on GNU/
 
 --------------------------------------------------------------------------------
 INSTALLATION                                    *gulp-vim-installation*
+
+This is not mandatory, but the plugin can use Tpope's Dispatch plugin (https://github.com/tpope/vim-dispatch) if its installed.
 
 # MANUALLY
 
@@ -59,7 +62,7 @@ Execute `Gulp` inside Vim, with given task name(s) (If no task name was given `d
 >
   GulpExt {task(s)...}
 <
-Open an external terminal (The default one via `exo-open` in GNU/Linux and a simple `cmd` in Windows) then execute `Gulp` with the given task name(s) (If no task name was given `default` is used).
+Open an external terminal (The default one via `exo-open` in GNU/Linux and a simple `cmd` in Windows) or use Dispatch plugin, then execute `Gulp` with the given task name(s) (If no task name was given `default` is used).
 
 MISC                                            *gulp-vim-usage:misc*
 >
@@ -90,6 +93,8 @@ If you want to go back to the shell prompt after executing the task, add to your
 >
   let g:gv_return_2_prompt = 1
 <
+Only works when `g:gv_use_dispatch=0`
+
 SPECIFY GULPFILE                                *gulp-vim-configuration:gulpfile*
 
 You can specify the gulpfile to use with `g:gv_default_gulpfile` variable (By default, it's `gulpfile.js`).
@@ -100,6 +105,17 @@ e.g.
   " Or
   let g:gv_default_gulpfile = 'gulpfile.babel.js'
 
+USE DISPATCH                                    *gulp-vim-configuration:dispatch*
+
+By default if the plugin Dispatch is installed, the command `GulpExt` will use `Start!` to execute Gulp, this means:
+
+* In Linux: If you're in tmux, a new window will be created otherwise the default terminal will be open.
+* In Windows: A minimized cmd.exe window is spawned.
+
+You can disable this integration by setting `g:gv_use_dispatch` to `0`
+>
+    let g:gv_use_dispatch = 0
+<
 --------------------------------------------------------------------------------
 |EXTRA|                                           *gulp-vim-extra*
 
