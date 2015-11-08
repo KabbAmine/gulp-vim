@@ -1,5 +1,5 @@
 " A simple gulp wrapper for vim
-" Version     : 0.7.0
+" Version     : 0.7.1
 " Creation    : 2015-03-18
 " Last Change : 2015-11-09
 " Maintainer  : Kabbaj Amine <amine.kabb@gmail.com>
@@ -47,7 +47,7 @@ endif
 let s:gulpCliFlags = has('gui_running') ? ' --no-color' : ''
 " Rvm hack for unix (Source rvm script file if it exists when using an external terminal) {{{1
 " http://stackoverflow.com/a/8493284
-let s:rvmHack = exists('g:gv_rvm_hack') ? '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" && ' : ''
+let s:rvmHack = exists('g:gv_rvm_hack') ? '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" &&' : ''
 " Use Dispatch plugin (Enabled by default) {{{1
 if !exists('g:gv_use_dispatch')
 	let g:gv_use_dispatch = 1
@@ -70,16 +70,8 @@ else
 endif
 " Command line for executing external terminal {{{1
 let s:termCmd = {
-			\ 'unix': {
-				\ 'h': 'exo-open --launch TerminalEmulator ',
-				\ 'b': ' bash -c "' . s:rvmHack,
-				\ 't': ' ; ' . s:prompt.unix . '" & '
-			\ },
-			\ 'win32': {
-				\ 'h': 'start cmd ' . s:prompt.win32 . ' ',
-				\ 'b': '',
-				\ 't': ' & '
-			\ }
+			\ 'unix': 'exo-open --launch TerminalEmulator bash -c "' . s:rvmHack . ' %s ; ' . s:prompt.unix . '" &',
+			\ 'win32': 'start cmd ' . s:prompt.win32 . ' %s &'
 		\}
 " }}}
 
@@ -109,7 +101,7 @@ function s:GulpExternal(...) " {{{1
 	if g:gv_use_dispatch && exists(':Start')
 		return printf('Start! gulp %s', l:tasks)
 	else
-		return 'silent :!' . s:termCmd[s:os].h . s:termCmd[s:os].b . 'gulp ' . l:tasks . s:termCmd[s:os].t
+		return printf('silent :!' . s:termCmd[s:os], 'gulp ' . l:tasks)
 	endif
 endfunction
 function s:GetTaskNames() " {{{1
