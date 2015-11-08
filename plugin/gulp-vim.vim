@@ -1,7 +1,7 @@
 " A simple gulp wrapper for vim
-" Version     : 0.6.2
+" Version     : 0.7.0
 " Creation    : 2015-03-18
-" Last Change : 2015-10-27
+" Last Change : 2015-11-09
 " Maintainer  : Kabbaj Amine <amine.kabb@gmail.com>
 " License     : This file is placed in the public domain.
 
@@ -20,11 +20,15 @@ set cpoptions&vim
 
 " COMMANDS
 " =====================================================================
-" {{{1
+" Main {{{1
 command -nargs=* -complete=custom,s:CompleteTaskNames Gulp :call s:ExecCmd('s:Gulp', 'e', <f-args>)
 command -nargs=* -complete=custom,s:CompleteTaskNames GulpExt :call s:ExecCmd('s:GulpExternal', 'c', <f-args>)
 command GulpTasks :call s:ExecCmd('s:GetTaskNames', 'e')
 command -nargs=? -complete=file GulpFile :call s:Gulpfile(<f-args>)
+" CTRLP {{{1
+if exists(':CtrlP') ==# 2
+	command CtrlPGulp call ctrlp#init(ctrlp#gulp#id())
+endif
 " }}}
 
 " VARIABLES
@@ -47,6 +51,10 @@ let s:rvmHack = exists('g:gv_rvm_hack') ? '[[ -s "$HOME/.rvm/scripts/rvm" ]] && 
 " Use Dispatch plugin (Enabled by default) {{{1
 if !exists('g:gv_use_dispatch')
 	let g:gv_use_dispatch = 1
+endif
+" Gulp command to use with CtrlP {{{1
+if !exists('g:gv_ctrlp_cmd')
+	let g:gv_ctrlp_cmd = 'Gulp'
 endif
 " Return to prompt option {{{1
 if exists('g:gv_return_2_prompt')
