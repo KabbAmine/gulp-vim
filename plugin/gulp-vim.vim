@@ -1,7 +1,7 @@
 " A simple gulp wrapper for vim
 " Version     : 0.7.1
 " Creation    : 2015-03-18
-" Last Change : 2015-11-09
+" Last Change : 2015-11-21
 " Maintainer  : Kabbaj Amine <amine.kabb@gmail.com>
 " License     : This file is placed in the public domain.
 
@@ -92,16 +92,18 @@ function s:Gulp(...) " {{{1
 
 	let l:tasks = a:0 >=# 1 ? join(a:000, ' ') : 'default'
 	echohl Title | echo 'Execute task(s) -> ' . l:tasks . ':' | echohl None
-	return system('gulp ' . l:tasks . s:gulpCliFlags)
+	let l:flags = ' --gulpfile ' . g:gv_default_gulpfile . ' ' . s:gulpCliFlags
+	return system('gulp ' . l:tasks . l:flags)
 endfunction
 function s:GulpExternal(...) " {{{1
 	" Return gulp execution with given param(s) as task name(s) in external terminal.
 
 	let l:tasks = a:0 >=# 1 ? join(a:000, ' ') : 'default'
+	let l:flags = ' --gulpfile ' . g:gv_default_gulpfile
 	if g:gv_use_dispatch && exists(':Start')
-		return printf('Start! gulp %s', l:tasks)
+		return printf('Start! gulp %s %s', l:tasks, l:flags)
 	else
-		return printf('silent :!' . s:termCmd[s:os], 'gulp ' . l:tasks)
+		return printf('silent :!%s gulp %s %s', s:termCmd[s:os], l:tasks, l:flags)
 	endif
 endfunction
 function s:GetTaskNames() " {{{1
