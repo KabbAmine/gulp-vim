@@ -1,6 +1,6 @@
 *gulp-vim*      Simply Gulp from Vim
 
-For Vim version 7.0 and above       Last change: 2015-10-27
+For Vim version 7.0 and above       Last change: 2015-11-21
 
     GULP-VIM - FULL-SCREEN MODE FOR VIM IN GNU/LINUX~
                                         from Kabbaj Amine~
@@ -22,6 +22,7 @@ License : This file is placed in the public domain.
   4.3. Go back to the shell prompt              |gulp-vim-configuration:shell_prompt|
   4.3. Specify gulpfile                         |gulp-vim-configuration:gulpfile|
   4.4. Use Dispatch                             |gulp-vim-configuration:dispatch|
+  4.5. CtrlP default command                    |gulp-vim-configuration:ctrlp|
 5. Extra                                        |gulp-vim-extra|
   5.1. Completion                               |gulp-vim-extra:completion|
 6. NOTES                                        |gulp-vim-notes|
@@ -31,6 +32,7 @@ DESCRIPTION                                     *gulp-vim-description*
 
 This plugin is a simple gulp (http://gulpjs.com) wrapper for vim (Tested on GNU/Linux and Windows)
 
+You can even use it with CtrlP (https://github.com/ctrlpvim/ctrlp.vim) if its installed.
 --------------------------------------------------------------------------------
 INSTALLATION                                    *gulp-vim-installation*
 
@@ -63,6 +65,10 @@ Execute `Gulp` inside Vim, with given task name(s) (If no task name was given `d
   GulpExt {task(s)...}
 <
 Open an external terminal (The default one via `exo-open` in GNU/Linux and a simple `cmd` in Windows) or use Dispatch plugin, then execute `Gulp` with the given task name(s) (If no task name was given `default` is used).
+>
+  CtrlPGulp
+<
+Execute gulp tasks with CtrlP (This command is provided only if ctrlp is installed).
 
 MISC                                            *gulp-vim-usage:misc*
 >
@@ -115,6 +121,12 @@ By default if the plugin Dispatch is installed, the command `GulpExt` will use `
 You can disable this integration by setting `g:gv_use_dispatch` to `0`
 >
     let g:gv_use_dispatch = 0
+<
+CTRLP DEFAULT COMMAND                           *gulp-vim-configuration:ctrlp*
+
+You can specify which gulp-vim command to use with `CtrlpGulp` (`Gulp` by default)):
+>
+    let g:gv_ctrlp_cmd = 'GulpExt'
 <
 --------------------------------------------------------------------------------
 |EXTRA|                                           *gulp-vim-extra*

@@ -6,8 +6,14 @@ Gulp-vim
 Description
 -----------
 
-This plugin is a simple [gulp](http://gulpjs.com) wrapper for vim
+This plugin is a simple [gulp](http://gulpjs.com) wrapper for vim.
 *(Works on GNU/Linux and Windows)*
+
+![gulp-vim](.img/gulp-vim.gif "gulp-vim plugin usage")
+
+You can even use it with [CtrlP](https://github.com/ctrlpvim/ctrlp.vim) if its installed.
+
+![gulp-vim-ctrlp](.img/gulp-vim-ctrlp.gif "gulp-vim with ctrlp")
 
 Installation
 -----------
@@ -43,10 +49,20 @@ Both commands accept 0 or many arguments (Task name(s)), that can be [completed]
 :GulpExt [task(s)...]
 ```
 
-
 The difference between those 2 commands is that `Gulp` executes gulp inside Vim and `GulpExt` open an external terminal (The default one via `exo-open` in GNU/Linux and a simple `cmd` in Windows) or use [Dispatch](#dispatch), then execute gulp.
 
 **Don't use gulp watching tasks with the command `Gulp` (`<Ctrl-C>` to stop it), use `GulpExt` instead**.
+
+---------------------------
+
+Using:
+
+```
+:CtrlpGulp
+```
+
+You can execute gulp tasks with CtrlP (This command is provided only if ctrlp is installed).
+Check the [configuration](#ctrlp).
 
 ### Misc
 
@@ -65,7 +81,6 @@ Define the `gulpfile` to use, e.g. `gulpfile.js`, `gulpfile.coffee`, `gulpfile.b
 In fact, this command just assign a value to `g:gv_default_gulpfile`.
 
 ---------------------------
-
 
 Configuration
 ---------
@@ -115,6 +130,14 @@ You can disable this integration by setting `g:gv_use_dispatch` to `0`
 let g:gv_use_dispatch = 0
 ```
 
+### CtrlP default command <a id="ctrlp"></a>
+
+You can specify which gulp-vim command to use with `CtrlpGulp` (`Gulp` by default)):
+
+```
+let g:gv_ctrlp_cmd = 'GulpExt'
+```
+
 Extra
 ------
 
@@ -131,6 +154,7 @@ TODO
   - [x] gulpfile.babel.js
 - [ ] Possibility to define custom terminal if needed (?)
 - [x] Integrate [Dispatch](https://github.com/tpope/vim-dispatch "Dispatch plugin url") or a similar plugin to avoid [#1](https://github.com/KabbAmine/gulp-vim/issues/1) (?)
+- [ ] Merge `Gulp` and `GulpExt` into one command `Gulp[!]`
 
 NOTES
 -----
