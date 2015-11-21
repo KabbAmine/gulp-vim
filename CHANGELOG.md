@@ -3,6 +3,17 @@ CHANGELOG
 
 ------------------------------
 
+v0.7.1 <small>(2015-11-21)</small>
+------------------------------
+
+* Use `--gulpfile` flag
+
+### Features
+
+* Add CtrlP integration (`:CtrlPGulp`)
+
+------------------------------
+
 v0.6.2 <small>(2015-10-27)</small>
 ------------------------------
 
@@ -14,8 +25,6 @@ v0.6.2 <small>(2015-10-27)</small>
 ### Features
 
 * Add Dispatch integration (`g:gv_use_dispatch`)
-
-------------------------------
 
 ------------------------------
 
