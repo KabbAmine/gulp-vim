@@ -11,7 +11,7 @@ This plugin is a simple [gulp](http://gulpjs.com) wrapper for vim.
 
 ![gulp-vim](.img/gulp-vim.gif "gulp-vim plugin usage")
 
-You can even use it with [CtrlP](https://github.com/ctrlpvim/ctrlp.vim) if its installed.
+You can even use it with [CtrlP](https://github.com/ctrlpvim/ctrlp.vim) or [Unite](https://github.com/Shougo/unite.vim) if they are installed.
 
 ![gulp-vim-ctrlp](.img/gulp-vim-ctrlp.gif "gulp-vim with ctrlp")
 
@@ -63,6 +63,16 @@ Using:
 
 You can execute gulp tasks with CtrlP (This command is provided only if ctrlp is installed).
 Check the [configuration](#ctrlp).
+
+---------------------------
+
+A `gulp` Unite source is provided:
+
+```
+:Unite -buffer-name=gulp gulp<CR>
+```
+
+The tasks will be executed using the gulp command from `g:gv_unite_cmd` (see [configuration](#unite)).
 
 ### Misc
 
@@ -136,6 +146,14 @@ You can specify which gulp-vim command to use with `CtrlpGulp` (`Gulp` by defaul
 
 ```
 let g:gv_ctrlp_cmd = 'GulpExt'
+```
+
+### Unite default command <a id="unite"></a>
+
+You can specify which gulp-vim command to use with the `gulp` Unite source action (`Gulp` by default)):
+
+```
+let g:gv_unite_cmd = 'GulpExt'
 ```
 
 Extra
