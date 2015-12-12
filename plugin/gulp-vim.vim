@@ -47,7 +47,7 @@ endif
 let s:gulpCliFlags = has('gui_running') ? ' --no-color' : ''
 " Rvm hack for unix (Source rvm script file if it exists when using an external terminal) {{{1
 " http://stackoverflow.com/a/8493284
-let s:rvmHack = exists('g:gv_rvm_hack') ? '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" &&' : ''
+let s:rvmHack = exists('g:gv_rvm_hack') && g:gv_rvm_hack && has('unix') ? '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm " &&' : ''
 " Use Dispatch plugin (Enabled by default) {{{1
 if !exists('g:gv_use_dispatch')
 	let g:gv_use_dispatch = 1
@@ -93,14 +93,14 @@ function! s:Gulp(...) abort " {{{1
 	let l:tasks = a:0 >=# 1 ? join(a:000, ' ') : 'default'
 	echohl Title | echo 'Execute task(s) -> ' . l:tasks . ':' | echohl None
 	let l:flags = ' --gulpfile ' . g:gv_default_gulpfile . ' ' . s:gulpCliFlags
-	return system('gulp ' . l:tasks . l:flags)
+	return system(s:rvmHack . 'gulp ' . l:tasks . l:flags)
 endfunction
 function! s:GulpExternal(...) abort " {{{1
 	" Return gulp execution with given param(s) as task name(s) in external terminal.
 
 	let l:tasks = a:0 >=# 1 ? join(a:000, ' ') : 'default'
 	let l:flags = ' --gulpfile ' . g:gv_default_gulpfile
-	let l:gc = printf('gulp %s %s', l:tasks, l:flags)
+	let l:gc = printf('%s gulp %s %s', s:rvmHack, l:tasks, l:flags)
 	if g:gv_use_dispatch && exists(':Start')
 		return printf('Start! %s', l:gc)
 	else
