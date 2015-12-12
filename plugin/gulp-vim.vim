@@ -21,13 +21,13 @@ set cpoptions&vim
 " COMMANDS
 " =====================================================================
 " Main {{{1
-command -nargs=* -complete=custom,s:CompleteTaskNames Gulp :call s:ExecCmd('s:Gulp', 'e', <f-args>)
-command -nargs=* -complete=custom,s:CompleteTaskNames GulpExt :call s:ExecCmd('s:GulpExternal', 'c', <f-args>)
-command GulpTasks :call s:ExecCmd('s:GetTaskNames', 'e')
-command -nargs=? -complete=file GulpFile :call s:Gulpfile(<f-args>)
+command! -nargs=* -complete=custom,s:CompleteTaskNames Gulp :call s:ExecCmd('s:Gulp', 'e', <f-args>)
+command! -nargs=* -complete=custom,s:CompleteTaskNames GulpExt :call s:ExecCmd('s:GulpExternal', 'c', <f-args>)
+command! GulpTasks :call s:ExecCmd('s:GetTaskNames', 'e')
+command! -nargs=? -complete=file GulpFile :call s:Gulpfile(<f-args>)
 " CTRLP {{{1
 if exists(':CtrlP') ==# 2
-	command CtrlPGulp call ctrlp#init(ctrlp#gulp#id())
+	command! CtrlPGulp call ctrlp#init(ctrlp#gulp#id())
 endif
 " }}}
 
@@ -77,7 +77,7 @@ let s:termCmd = {
 
 " FUNCTIONS
 " =====================================================================
-function s:Gulpfile(...) "{{{1
+function! s:Gulpfile(...) abort "{{{1
 	let l:gf = exists('a:1') ? a:1 : 'gulpfile.js'
 	if l:gf !~# '^gulpfile'
 		echohl Error | echo l:gf . ' is not a valid gulpfile' | echohl None
@@ -87,7 +87,7 @@ function s:Gulpfile(...) "{{{1
 		return filereadable(getcwd() . s:sep . l:gf)
 	endif
 endfunction
-function s:Gulp(...) " {{{1
+function! s:Gulp(...) abort " {{{1
 	" Return gulp execution with given param(s) as task name(s) (By default is 'default' :D)
 
 	let l:tasks = a:0 >=# 1 ? join(a:000, ' ') : 'default'
@@ -95,7 +95,7 @@ function s:Gulp(...) " {{{1
 	let l:flags = ' --gulpfile ' . g:gv_default_gulpfile . ' ' . s:gulpCliFlags
 	return system('gulp ' . l:tasks . l:flags)
 endfunction
-function s:GulpExternal(...) " {{{1
+function! s:GulpExternal(...) abort " {{{1
 	" Return gulp execution with given param(s) as task name(s) in external terminal.
 
 	let l:tasks = a:0 >=# 1 ? join(a:000, ' ') : 'default'
@@ -107,7 +107,7 @@ function s:GulpExternal(...) " {{{1
 		return printf('silent :!%s', printf(s:termCmd[s:os], l:gc))
 	endif
 endfunction
-function s:GetTaskNames() " {{{1
+function! s:GetTaskNames() abort " {{{1
 	" Return task names as strings from gulpfile
 
 	let l:tasks = []
@@ -124,7 +124,7 @@ function s:GetTaskNames() " {{{1
 
 endfunction
 " }}}
-function s:ExecCmd(funName, action, ...) " {{{1
+function! s:ExecCmd(funName, action, ...) abort " {{{1
 	" Automate the vim command creation:
 	"	- Check if gulpfile is readable
 	"	- Echo or execute when needed
@@ -141,7 +141,7 @@ function s:ExecCmd(funName, action, ...) " {{{1
 		echohl Error | echo 'No valid gulpfile in the current directory' | echohl None
 	endif
 endfunction
-function s:CompleteTaskNames(A, L, P) " {{{1
+function! s:CompleteTaskNames(A, L, P) abort " {{{1
 	if s:Gulpfile(g:gv_default_gulpfile)
 		return s:GetTaskNames()
 	endif
