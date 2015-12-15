@@ -47,7 +47,7 @@ endif
 let s:gulpCliFlags = has('gui_running') ? ' --no-color' : ''
 " Rvm hack for unix (Source rvm script file if it exists when using an external terminal) {{{1
 " http://stackoverflow.com/a/8493284
-let s:rvmHack = exists('g:gv_rvm_hack') && g:gv_rvm_hack && has('unix') ? '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm " &&' : ''
+let s:rvmHack = exists('g:gv_rvm_hack') && g:gv_rvm_hack && has('unix') ? '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" && ' : ''
 " Use Dispatch plugin (Enabled by default) {{{1
 if !exists('g:gv_use_dispatch')
 	let g:gv_use_dispatch = 1
