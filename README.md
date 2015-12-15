@@ -1,7 +1,7 @@
-Gulp-vim + ctrlp-gulp + unite-gulp
+Gulp-vim + ctrlp-gulp + unite-gulp [![GitHub version](https://badge.fury.io/gh/kabbamine%2Fgulp-vim.svg)](https://badge.fury.io/gh/kabbamine%2Fgulp-vim)
 ==================================
 
-[![GitHub version](https://badge.fury.io/gh/kabbamine%2Fgulp-vim.svg)](https://badge.fury.io/gh/kabbamine%2Fgulp-vim)
+> Starting from version `0.8.0` the plugin uses [semantic versionning 2.0.0](http://semver.org/).
 
 Description
 -----------
@@ -203,6 +203,6 @@ NOTES
 
 Thanks to gulp author(s).
 
-Thanks to Bram Moolenaar for creating the best piece of software in the world :D
+Thanks to Bram Moolenaar for creating the best piece of software in the world :heart:
 
 Thanks to you if you're using gulp-vim.
