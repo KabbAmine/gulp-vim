@@ -1,7 +1,7 @@
 " A simple gulp wrapper for vim
 " Version     : 0.7.1
 " Creation    : 2015-03-18
-" Last Change : 2015-12-12
+" Last Change : 2015-12-15
 " Maintainer  : Kabbaj Amine <amine.kabb@gmail.com>
 " License     : This file is placed in the public domain.
 
@@ -101,7 +101,10 @@ function! s:GulpExternal(...) abort " {{{1
 	let l:tasks = a:0 >=# 1 ? join(a:000, ' ') : 'default'
 	let l:flags = ' --gulpfile ' . g:gv_default_gulpfile
 	let l:gc = printf('%s gulp %s %s', s:rvmHack, l:tasks, l:flags)
-	if g:gv_use_dispatch && exists(':Start')
+	if exists('g:gv_custom_cmd')
+		let l:gc = 'cd ' . getcwd() . ' && ' . l:gc
+		return printf(g:gv_custom_cmd, shellescape(l:gc))
+	elseif g:gv_use_dispatch && exists(':Start')
 		return printf('Start! %s', l:gc)
 	else
 		return printf('silent :!%s', printf(s:termCmd[s:os], l:gc))
