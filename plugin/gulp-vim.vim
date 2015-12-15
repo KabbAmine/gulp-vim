@@ -56,6 +56,10 @@ endif
 if !exists('g:gv_ctrlp_cmd')
 	let g:gv_ctrlp_cmd = 'Gulp'
 endif
+" Gulp command to use with Unite {{{1
+if !exists('g:gv_unite_cmd')
+	let g:gv_unite_cmd = 'Gulp'
+endif
 " Return to prompt option {{{1
 if exists('g:gv_return_2_prompt')
 	let s:prompt = {

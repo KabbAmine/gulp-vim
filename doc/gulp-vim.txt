@@ -23,6 +23,7 @@ License : This file is placed in the public domain.
   4.3. Specify gulpfile                         |gulp-vim-configuration:gulpfile|
   4.4. Use Dispatch                             |gulp-vim-configuration:dispatch|
   4.5. CtrlP default command                    |gulp-vim-configuration:ctrlp|
+  4.6. Unite default command                    |gulp-vim-configuration:unite|
 5. Extra                                        |gulp-vim-extra|
   5.1. Completion                               |gulp-vim-extra:completion|
 6. NOTES                                        |gulp-vim-notes|
@@ -32,7 +33,7 @@ DESCRIPTION                                     *gulp-vim-description*
 
 This plugin is a simple gulp (http://gulpjs.com) wrapper for vim (Tested on GNU/Linux and Windows)
 
-You can even use it with CtrlP (https://github.com/ctrlpvim/ctrlp.vim) if its installed.
+You can even use it with CtrlP (https://github.com/ctrlpvim/ctrlp.vim) or Unite (https://github.com/Shougo/unite.vim) if they are installed.
 --------------------------------------------------------------------------------
 INSTALLATION                                    *gulp-vim-installation*
 
@@ -127,6 +128,12 @@ CTRLP DEFAULT COMMAND                           *gulp-vim-configuration:ctrlp*
 You can specify which gulp-vim command to use with `CtrlpGulp` (`Gulp` by default)):
 >
     let g:gv_ctrlp_cmd = 'GulpExt'
+<
+UNITE DEFAULT COMMAND                           *gulp-vim-configuration:unite*
+
+You can specify which gulp-vim command to use with `gulp` Unite source action (`Gulp` by default)):
+>
+    let g:gv_unite_cmd = 'GulpExt'
 <
 --------------------------------------------------------------------------------
 |EXTRA|                                           *gulp-vim-extra*
