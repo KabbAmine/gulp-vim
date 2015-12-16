@@ -3,6 +3,14 @@ CHANGELOG
 
 Starting from version `0.8.0` the plugin uses [semantic versionning 2.0.0](http://semver.org/).
 
+0.8.1 <small>(2015-12-16)</small>
+------------------------------
+
+* Fix rvm_hack value
+* Add more informations in the README.
+
+------------------------------
+
 0.8.0 <small>(2015-12-15)</small>
 ------------------------------
 
