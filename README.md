@@ -14,7 +14,8 @@ This plugin is a simple [gulp](http://gulpjs.com) wrapper for vim.
 ### Features
 
 * Run Gulp inside Vim.
-* Run Gulp in the backgound using an external terminal or a vim plugin.
+* Run Gulp in the backgound using an external terminal.
+* Run Gulp using a custom shell or vim command.
 * List your gulp tasks.
 * Support different gulpfiles (`.js`, `.babel.js`, `.coffee`).
 * [CtrlP](https://github.com/ctrlpvim/ctrlp.vim) integration.
@@ -31,7 +32,7 @@ e.g with [Vim-plug](https://github.com/junegunn/vim-plug)
 Plug 'KabbAmine/gulp-vim'
 ```
 
-This is not mandatory, but the plugin can use [Tpope's Dispatch plugin](https://github.com/tpope/vim-dispatch) if its installed (**P.S:** This integration will be removed in the future versions, the `g:gv_custom_cmd` will replace it).
+This is not mandatory, but the plugin can use [Tpope's Dispatch plugin](https://github.com/tpope/vim-dispatch) if its installed (**P.S:** This integration will be removed in the future versions, the `g:gv_custom_cmd` is a better choice).
 
 Usage
 ---------
@@ -40,7 +41,7 @@ Usage
 
 Gulp-vim provides 2 main commands: `Gulp` and `GulpExt`.
 
-Both commands accept 0 or many arguments (Task name(s)), that can be [completed](#completion) using `<Tab>` (If no task name was provided, *'default'* is used).
+Both commands accept 0 or many arguments (Task name(s)), that can be [completed](#completion) using `<Tab>`. If no task name is provided, *'default'* will be used.
 
 ```
 :Gulp    [task(s)...]
@@ -48,7 +49,7 @@ Both commands accept 0 or many arguments (Task name(s)), that can be [completed]
 ```
 
 * The command `Gulp` executes gulp inside Vim.
-* The command `GulpExt` opens an external terminal:
+* The command `GulpExt` executes gulp in an external terminal:
   - The default one via `exo-open` in GNU/Linux and a simple `cmd` in Windows.
   - Or use [Dispatch](#dispatch) if its installed.
   - Or use a defined user command.
@@ -57,22 +58,22 @@ Both commands accept 0 or many arguments (Task name(s)), that can be [completed]
 
 ### CtrlP Integration
 
+You can execute gulp tasks with CtrlP (This command is provided only if ctrlp is installed).
+Check the [configuration](#ctrlp).
+
 ```
 :CtrlpGulp
 ```
 
-You can execute gulp tasks with CtrlP (This command is provided only if ctrlp is installed).
-Check the [configuration](#ctrlp).
-
 ### Unite source
 
-A `gulp` Unite source is provided:
+A `gulp` Unite source is provided, see [configuration](#unite).
 
 ```
 :Unite -buffer-name=gulp gulp
 ```
 
-The tasks will be executed using the gulp command from `g:gv_unite_cmd` (see [configuration](#unite)).
+
 
 ### Misc
 
@@ -105,6 +106,8 @@ To get rid of that add to your vimrc:
 let g:gv_rvm_hack = 1
 ```
 
+If its not working, consider using [Tpope's vim-rvm plugin](https://github.com/tpope/vim-rvm).
+
 ### Go back to the shell prompt
 
 By default with `GulpExt`, when the gulp task is completed, the terminal is closed.
@@ -114,7 +117,7 @@ If you want to go back to the shell prompt after executing the task, add to your
 let g:gv_return_2_prompt = 1
 ```
 
-**P.S:** Only works when `g:gv_use_dispatch = 0`
+**P.S:** If you are using a custom command it may not work.
 
 ### Specify the gulpfile
 
@@ -126,6 +129,8 @@ let g:gv_default_gulpfile = 'gulpfile.coffee'
 " Or
 let g:gv_default_gulpfile = 'gulpfile.babel.js'
 ```
+
+**P.S:** The paths are not considered.
 
 ### Use dispatch <a id="dispatch"></a>
 
@@ -173,16 +178,18 @@ Extra
 
 Gulp-vim searches for a *gulpfile* (`g:gv_default_gulpfile`) in the current vim directory (`:pwd`) then extract from it task names to provide command completion (This method is quicker than using `gulp --tasks-simple`).
 
+This may change a little in the future versions, see #2.
+
 TODO
 -----
 
+- [ ] Merge `Gulp` and `GulpExt` into one command `Gulp[!]`
 - [x] Add doc file.
 - [x] Support other gulpfile(s):
   - [x] gulpfile.coffee
   - [x] gulpfile.babel.js
 - [x] Possibility to define custom terminal if needed (?)
 - [x] Integrate [Dispatch](https://github.com/tpope/vim-dispatch "Dispatch plugin url") or a similar plugin to avoid [#1](https://github.com/KabbAmine/gulp-vim/issues/1) (?)
-- [ ] Merge `Gulp` and `GulpExt` into one command `Gulp[!]`
 
 My configuration
 ----------------
