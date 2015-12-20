@@ -65,11 +65,16 @@ function! gulpVim#SetCustomCommand(custom, gulp) abort " {{{1
 	" Return parsed custom command (If custom[1] == 1, escape double
 	" quotes in gulp command).
 
-	let l:gc = printf('cd %s %s %s', getcwd(), s:os.and, a:gulp)
-	if a:custom[1] ==# 0
-		return printf(a:custom[0], l:gc)
-	elseif a:custom[1] ==# 1
-		return printf(a:custom[0], substitute(l:gc, '"', s:os.escDQuote, 'g'))
+	let l:gc = printf('cd %s %s %s', shellescape(getcwd()), s:os.and, a:gulp)
+	if type(a:custom) ==# type('')
+		" To be compatible with old versions, may be removed in 1.0.0
+		return printf(a:custom, l:gc)
+	elseif type(a:custom) ==# type([])
+		if a:custom[1] ==# 0
+			return printf(a:custom[0], l:gc)
+		elseif a:custom[1] ==# 1
+			return printf(a:custom[0], escape(l:gc, s:os.escDQuote))
+		endif
 	endif
 endfun
 function! gulpVim#Execute(...) abort " {{{1
