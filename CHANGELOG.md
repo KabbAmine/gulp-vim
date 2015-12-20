@@ -3,6 +3,15 @@ CHANGELOG
 
 Starting from version `0.8.0` the plugin uses [semantic versionning 2.0.0](http://semver.org/).
 
+0.8.5 <small>(2015-12-21)</small>
+------------------------------
+
+* Refactoring:
+  - Use printf everywhere instead of simple string concatenation
+
+
+------------------------------
+
 0.8.1 <small>(2015-12-16)</small>
 ------------------------------
 

@@ -1,5 +1,5 @@
 " Creation    : 2015-12-20
-" Last Change : 2015-12-20
+" Last Change : 2015-12-21
 
 " VARIABLES
 " =====================================================================
@@ -91,7 +91,9 @@ function! gulpVim#Run(...) abort " {{{1
 
 	let l:tasks = a:0 >=# 1 ? join(a:000, ' ') : 'default'
 	let l:flags = '--gulpfile ' . g:gv_default_gulpfile
-	let l:gc = printf('%s gulp %s %s', s:shell.rvm, l:tasks, l:flags)
+	let l:focus = has('unix') && executable('wmctrl') ?
+				\ 'wmctrl -ia ' . v:windowid . ';' : ''
+	let l:gc = printf('%s %s gulp %s %s', l:focus, s:shell.rvm, l:tasks, l:flags)
 	if exists('g:gv_custom_cmd')
 		return gulpVim#SetCustomCommand(g:gv_custom_cmd, l:gc)
 	" WILL BE REMOVED ===========================
