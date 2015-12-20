@@ -26,9 +26,10 @@ command! -nargs=* -complete=custom,s:CompleteTaskNames GulpExt :call s:ExecCmd('
 command! GulpTasks :call s:ExecCmd('s:GetTaskNames', 'e')
 command! -nargs=? -complete=file GulpFile :call s:Gulpfile(<f-args>)
 " CTRLP {{{1
-if exists(':CtrlP') ==# 2
-	command! CtrlPGulp call ctrlp#init(ctrlp#gulp#id())
-endif
+command! CtrlPGulp
+			\ if exists(':CtrlP') ==# 2
+				\| call ctrlp#init(ctrlp#gulp#id())
+			\| endif
 " }}}
 
 " VARIABLES
