@@ -32,7 +32,7 @@ command! CtrlPGulp
 			\| endif
 " }}}
 
-" COMMANDS
+" FUNCTIONS
 " =====================================================================
 function! <SID>CompleteTasks(A, L, P) abort " {{{1
 	if gulpVim#CheckGulpFile(g:gv_default_gulpfile)
@@ -45,6 +45,7 @@ endfunction
 let &cpoptions = s:saveCpoptions
 unlet s:saveCpoptions
 let &fileformat = s:saveFileFormat
+unlet s:saveFileFormat
 " }}}
 
 " vim:ft=vim:fdm=marker:fmr={{{,}}}:
