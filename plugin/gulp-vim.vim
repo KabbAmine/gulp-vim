@@ -45,10 +45,10 @@ let s:os = {
 			\ 'escDQuote' : (has('unix') ? '\\"'  : '\"')
 		\ }
 " Add --no-color flag if gui vim is used {{{1
-let s:gulpCliFlags = has('gui_running') ? ' --no-color' : ''
+let s:gulpCliFlags = has('gui_running') ? '--no-color' : ''
 " Rvm hack for unix (Source rvm script file if it exists when using an external terminal) {{{1
 " http://stackoverflow.com/a/8493284
-let s:rvmHack = exists('g:gv_rvm_hack') && g:gv_rvm_hack && has('unix') ? '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" && ' : ''
+let s:rvmHack = exists('g:gv_rvm_hack') && g:gv_rvm_hack && has('unix') ? '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" &&' : ''
 " Use Dispatch plugin (Enabled by default) {{{1
 if !exists('g:gv_use_dispatch')
 	let g:gv_use_dispatch = 1
@@ -64,8 +64,8 @@ endif
 " Return to prompt option {{{1
 if exists('g:gv_return_2_prompt')
 	let s:prompt = {
-				\ 'unix': ' exec bash',
-				\ 'win32': ' /k'
+				\ 'unix'  : ' exec bash',
+				\ 'win32' : ' /k'
 				\ }
 else
 	let s:prompt = {
@@ -75,7 +75,7 @@ else
 endif
 " Command line for executing external terminal {{{1
 let s:termCmd = {
-			\ 'unix': 'exo-open --launch TerminalEmulator bash -c "' . s:rvmHack . ' %s ; ' . s:prompt.unix . '" &',
+			\ 'unix' : 'exo-open --launch TerminalEmulator bash -c "' . s:rvmHack . ' %s ; ' . s:prompt.unix . '" &',
 			\ 'win32': 'start cmd ' . s:prompt.win32 . ' %s &'
 		\}
 " }}}
@@ -97,8 +97,10 @@ function! s:Gulp(...) abort " {{{1
 
 	let l:tasks = a:0 >=# 1 ? join(a:000, ' ') : 'default'
 	echohl Title | echo 'Execute task(s) -> ' . l:tasks . ':' | echohl None
-	let l:flags = ' --gulpfile ' . g:gv_default_gulpfile . ' ' . s:gulpCliFlags
-	return system(s:rvmHack . 'gulp ' . l:tasks . l:flags)
+	let l:flags = printf('--gulpfile %s %s', g:gv_default_gulpfile, s:gulpCliFlags)
+	" let l:flags = '--gulpfile ' . g:gv_default_gulpfile . ' ' . s:gulpCliFlags
+	return system(printf('%s gulp %s %s', s:rvmHack, l:tasks, l:flags))
+	" return system(s:rvmHack . 'gulp ' . l:tasks . l:flags)
 endfunction
 function! s:SetCustomCommand(customCmd, gulpCmd) abort " {{{1
 	let l:gc = printf('cd %s %s %s', getcwd(), s:os.and, a:gulpCmd)
@@ -112,7 +114,7 @@ function! s:GulpExternal(...) abort " {{{1
 	" Return gulp execution with given param(s) as task name(s) in external terminal.
 
 	let l:tasks = a:0 >=# 1 ? join(a:000, ' ') : 'default'
-	let l:flags = ' --gulpfile ' . g:gv_default_gulpfile
+	let l:flags = '--gulpfile ' . g:gv_default_gulpfile
 	let l:gc = printf('%s gulp %s %s', s:rvmHack, l:tasks, l:flags)
 	if exists('g:gv_custom_cmd')
 		return s:SetCustomCommand(g:gv_custom_cmd, l:gc)
