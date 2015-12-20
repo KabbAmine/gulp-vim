@@ -1,7 +1,7 @@
 " A simple gulp wrapper for vim
 " Version     : 0.8.1
 " Creation    : 2015-03-18
-" Last Change : 2015-12-16
+" Last Change : 2015-12-20
 " Maintainer  : Kabbaj Amine <amine.kabb@gmail.com>
 " License     : This file is placed in the public domain.
 
@@ -38,11 +38,12 @@ if !exists('g:gv_default_gulpfile')
 	let g:gv_default_gulpfile = 'gulpfile.js'
 endif
 " Get used OS & dir separator {{{1
-if has('unix')
-	let s:os = 'unix' | let s:sep = '/'
-elseif has('win32')
-	let s:os = 'win32' | let s:sep = '\'
-endif
+let s:os = {
+			\ 'name'      : (has('unix') ? 'unix' : 'win32'),
+			\ 'sep'       : (has('unix') ? '/'    : '\'),
+			\ 'and'       : (has('unix') ? '&&'   : '&'),
+			\ 'escDQuote' : (has('unix') ? '\\"'  : '\"')
+		\ }
 " Add --no-color flag if gui vim is used {{{1
 let s:gulpCliFlags = has('gui_running') ? ' --no-color' : ''
 " Rvm hack for unix (Source rvm script file if it exists when using an external terminal) {{{1
@@ -88,7 +89,7 @@ function! s:Gulpfile(...) abort "{{{1
 		return 0
 	else
 		let g:gv_default_gulpfile = l:gf
-		return filereadable(getcwd() . s:sep . l:gf)
+		return filereadable(getcwd() . s:os.sep . l:gf)
 	endif
 endfunction
 function! s:Gulp(...) abort " {{{1
@@ -99,6 +100,14 @@ function! s:Gulp(...) abort " {{{1
 	let l:flags = ' --gulpfile ' . g:gv_default_gulpfile . ' ' . s:gulpCliFlags
 	return system(s:rvmHack . 'gulp ' . l:tasks . l:flags)
 endfunction
+function! s:SetCustomCommand(customCmd, gulpCmd) abort " {{{1
+	let l:gc = printf('cd %s %s %s', getcwd(), s:os.and, a:gulpCmd)
+	if a:customCmd[1] ==# 0
+		return printf(a:customCmd[0], l:gc)
+	elseif a:customCmd[1] ==# 1
+		return printf(a:customCmd[0], substitute(l:gc, '"', s:os.escDQuote, 'g'))
+	endif
+endfun
 function! s:GulpExternal(...) abort " {{{1
 	" Return gulp execution with given param(s) as task name(s) in external terminal.
 
@@ -106,12 +115,11 @@ function! s:GulpExternal(...) abort " {{{1
 	let l:flags = ' --gulpfile ' . g:gv_default_gulpfile
 	let l:gc = printf('%s gulp %s %s', s:rvmHack, l:tasks, l:flags)
 	if exists('g:gv_custom_cmd')
-		let l:gc = 'cd ' . getcwd() . ' && ' . l:gc
-		return printf(g:gv_custom_cmd, shellescape(l:gc))
+		return s:SetCustomCommand(g:gv_custom_cmd, l:gc)
 	elseif g:gv_use_dispatch && exists(':Start')
 		return printf('Start! %s', l:gc)
 	else
-		return printf('silent :!%s', printf(s:termCmd[s:os], l:gc))
+		return printf('silent :!%s', printf(s:termCmd[s:os.name], l:gc))
 	endif
 endfunction
 function! s:GetTaskNames() abort " {{{1
