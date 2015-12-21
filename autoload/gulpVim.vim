@@ -41,7 +41,7 @@ let s:shell.prompt = (exists('g:gv_return_2_prompt')) ?
 			\ {'unix': '', 'win32': ' /c'}
 " Full shell command for executing external terminal
 let s:shell.cmd = {
-			\ 'unix' : 'exo-open --launch TerminalEmulator bash -c "' . s:shell.rvm . ' %s ; ' . s:shell.prompt.unix . '" &',
+			\ 'unix' : 'exo-open --launch TerminalEmulator bash -c "' . escape(s:shell.rvm, s:os.escDQuote) . ' %s ; ' . s:shell.prompt.unix . '" &',
 			\ 'win32': 'start cmd ' . s:shell.prompt.win32 . ' %s &'
 		\ }
 " }}}
@@ -101,6 +101,7 @@ function! gulpVim#Run(...) abort " {{{1
 		return printf('Start! %s', l:gc)
 	" ===========================================
 	else
+		let l:gc = printf('%s gulp %s %s', l:focus, l:tasks, l:flags)
 		return printf('silent :!%s', printf(s:shell.cmd[s:os.name], l:gc))
 	endif
 endfunction
