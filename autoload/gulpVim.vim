@@ -91,7 +91,7 @@ function! gulpVim#Run(...) abort " {{{1
 
 	let l:tasks = a:0 >=# 1 ? join(a:000, ' ') : 'default'
 	let l:flags = '--gulpfile ' . g:gv_default_gulpfile
-	let l:focus = has('unix') && executable('wmctrl') ?
+	let l:focus = has('unix') && executable('wmctrl') && v:windowid !=# 0 ?
 				\ 'wmctrl -ia ' . v:windowid . ';' : ''
 	let l:gc = printf('%s %s gulp %s %s', l:focus, s:shell.rvm, l:tasks, l:flags)
 	if exists('g:gv_custom_cmd')
