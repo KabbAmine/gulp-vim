@@ -1,6 +1,6 @@
 *gulp-vim*      Simply Gulp from Vim
 
-For Vim version 7.0 and above       Last change: 2015-12-15
+For Vim version 7.0 and above       Last change: 2015-12-21
 
     GULP-VIM - FULL-SCREEN MODE FOR VIM IN GNU/LINUX~
                                         from Kabbaj Amine~
@@ -37,17 +37,16 @@ DESCRIPTION                                     *gulp-vim-description*
 This plugin is a simple gulp (http://gulpjs.com) wrapper for vim (Tested on GNU/Linux and Windows)
 
 Features
-    * Run Gulp inside Vim.
-    * Run Gulp in the backgound using an external terminal or a vim plugin.
+    * Run gulp inside Vim.
+    * Run gulp in the backgound using an external terminal without losing focus.
+    * Run gulp using a custom shell or vim command.
     * List your gulp tasks.
     * Support different gulpfiles (`.js`, `.babel.js`, `.coffee`).
-    * CtrlP integration.
-    * Unite source.
+    * [CtrlP](https://github.com/ctrlpvim/ctrlp.vim) integration.
+    * [Unite](https://github.com/shougo/unite.vim) source.
 
 --------------------------------------------------------------------------------
 INSTALLATION                                    *gulp-vim-installation*
-
-This is not mandatory, but the plugin can use Tpope's Dispatch plugin (https://github.com/tpope/vim-dispatch) if its installed.
 
 # MANUALLY
 
@@ -77,23 +76,23 @@ Execute `Gulp` inside Vim, with given task name(s) (If no task name was given `d
 <
 Open an external terminal:
     * The default one via `exo-open` in GNU/Linux and a simple `cmd` in Windows
-    * Or use Dispatch plugin.
-    * Or use a defined user command.
+    * Use a defined user command.
+    * Use [Dispatch](#dispatch) if its installed (WILL BE REMOVED).
+
+On Unix, if wmctrl is installed the focus from the editor will not be lost.
 
 CTRLP INTEGRATION                               *gulp-vim-usage:main-ctrlp*
 >
   CtrlPGulp
 <
-Execute gulp tasks with CtrlP (This command is provided only if ctrlp is installed).
+Execute gulp tasks with CtrlP (Works only if CtrlP is installed of course).
 
 UNITE SOURCE                                    *gulp-vim-usage:main-unite*
 
-A `gulp` Unite source is provided:
+A `gulp` Unite source is provided.
 >
   Unite -buffer-name=gulp gulp
 <
-The tasks will be executed using the gulp command from `g:gv_unite_cmd`.
-
 MISC                                            *gulp-vim-usage:misc*
 >
   GulpTasks
@@ -110,7 +109,7 @@ CONFIGURATION                                   *gulp-vim-configuration*
 
 RVM HACK                                        *gulp-vim-configuration:rvm_hack*
 
-If you're using rvm (https://rvm.io/) in GNU/Linux, when using `GulpExt` and opening a new terminal window, rvm shell functions may not be exported so your gems and some gulp plugins will not work (`gulp-compass` as an example).
+If you're using rvm (https://rvm.io/) in GNU/Linux, when using `GulpExt or a custom command, rvm shell functions may not be exported so your gems and some gulp plugins will not work (`gulp-compass` as an example).
 
 To get rid of that add to your vimrc:
 >
@@ -123,7 +122,7 @@ If you want to go back to the shell prompt after executing the task, add to your
 >
   let g:gv_return_2_prompt = 1
 <
-Only works when `g:gv_use_dispatch=0`
+If you are using a custom command it will not work.
 
 SPECIFY GULPFILE                                *gulp-vim-configuration:gulpfile*
 
@@ -162,15 +161,21 @@ You can specify which gulp-vim command to use with `gulp` Unite source action (`
 <
 CUSTOM COMMAND                                  *gulp-vim-configuration:custom*
 
-You can specify a custom command to use in `GulpExt`: A string where `%s` will be replaced by the adequate `gulp` command.
-This can be a vim command (If you want to use external vim plugins) or a shell command.
+You can specify a custom command to use with `GulpExt` via `g:gv_custom_cmd`.
+
+This variable can be a list or a string where `%s` will be replaced by the adequate shell command.
+It can be a vim command (If you want to use external vim plugin) or a shell command.
+
+e.g using `Dispatch`: >
+
+    let g:gv_custom_cmd = 'Start! %s'
+
+Be aware that the gulp shell command can contain double quotes, so if you need to escape them use a list instead of a string and define its 2nd element to 1.
 
 e.g using [Vimux](https://github.com/benmills/vimux) plugin: >
-    let g:gv_custom_cmd = 'VimuxRunCommand %s'` plugin.
 
-e.g using `xterm`: >
-    let g:gv_custom_cmd = '!xterm -e %s &'`
-<
+    let g:gv_custom_cmd = ['VimuxRunCommand "clear && %s"', 1]
+
 --------------------------------------------------------------------------------
 |EXTRA|                                           *gulp-vim-extra*
 
