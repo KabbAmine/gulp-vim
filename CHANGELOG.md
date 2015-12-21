@@ -3,6 +3,13 @@ CHANGELOG
 
 Starting from version `0.8.0` the plugin uses [semantic versionning 2.0.0](http://semver.org/).
 
+0.8.3 <small>(2015-12-21)</small>
+------------------------------
+
+* Fix: Get focus back only when vim window id is different from 0
+
+------------------------------
+
 0.8.2 <small>(2015-12-21)</small>
 ------------------------------
 
