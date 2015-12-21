@@ -3,12 +3,13 @@ CHANGELOG
 
 Starting from version `0.8.0` the plugin uses [semantic versionning 2.0.0](http://semver.org/).
 
-0.8.5 <small>(2015-12-21)</small>
+0.8.2 <small>(2015-12-21)</small>
 ------------------------------
 
-* Refactoring:
-  - Use printf everywhere instead of simple string concatenation
-
+* Refactoring
+* Improve custom command process, `g:gv_custom_cmd` can now escape double quotes if needed
+* Set back focus to the editor after using `GulpExt` (Need `wmctrl` & is Unix only)
+* Update screenshots and documentation
 
 ------------------------------
 
