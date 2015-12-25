@@ -1,2 +1,4 @@
 .agignore
+.gitignore
 doc/tags
+gulp-vim.xml
