@@ -1,5 +1,5 @@
 " Creation    : 2015-12-20
-" Last Change : 2015-12-21
+" Last Change : 2015-12-26
 
 " VARIABLES
 " =====================================================================
@@ -7,8 +7,7 @@
 let s:os = {
 			\ 'name'      : (has('unix') ? 'unix' : 'win32'),
 			\ 'sep'       : (has('unix') ? '/'    : '\'),
-			\ 'and'       : (has('unix') ? '&&'   : '&'),
-			\ 'escDQuote' : (has('unix') ? '\\"'  : '\"')
+			\ 'and'       : (has('unix') ? '&&'   : '&')
 		\ }
 " Default gulpfile {{{1
 if !exists('g:gv_default_gulpfile')
@@ -41,7 +40,7 @@ let s:shell.prompt = (exists('g:gv_return_2_prompt')) ?
 			\ {'unix': '', 'win32': ' /c'}
 " Full shell command for executing external terminal
 let s:shell.cmd = {
-			\ 'unix' : 'exo-open --launch TerminalEmulator bash -c "' . escape(s:shell.rvm, s:os.escDQuote) . ' %s ; ' . s:shell.prompt.unix . '" &',
+			\ 'unix' : 'exo-open --launch TerminalEmulator bash -c "' . s:shell.rvm . ' %s ; ' . s:shell.prompt.unix . '" &',
 			\ 'win32': 'start cmd ' . s:shell.prompt.win32 . ' %s &'
 		\ }
 " }}}
@@ -73,7 +72,7 @@ function! gulpVim#SetCustomCommand(custom, gulp) abort " {{{1
 		if a:custom[1] ==# 0
 			return printf(a:custom[0], l:gc)
 		elseif a:custom[1] ==# 1
-			return printf(a:custom[0], escape(l:gc, s:os.escDQuote))
+			return printf(a:custom[0], escape(l:gc, '"'))
 		endif
 	endif
 endfun
@@ -101,7 +100,7 @@ function! gulpVim#Run(...) abort " {{{1
 		return printf('Start! %s', l:gc)
 	" ===========================================
 	else
-		let l:gc = printf('%s gulp %s %s', l:focus, l:tasks, l:flags)
+		let l:gc = escape(printf('%s gulp %s %s', l:focus, l:tasks, l:flags), '"')
 		return printf('silent :!%s', printf(s:shell.cmd[s:os.name], l:gc))
 	endif
 endfunction
