@@ -1,7 +1,7 @@
 " A simple gulp wrapper for vim
 " Version     : 0.8.1
 " Creation    : 2015-03-18
-" Last Change : 2015-12-20
+" Last Change : 2015-12-26
 " Maintainer  : Kabbaj Amine <amine.kabb@gmail.com>
 " License     : This file is placed in the public domain.
 
@@ -24,7 +24,7 @@ set cpoptions&vim
 command! -nargs=* -complete=custom,<SID>CompleteTasks Gulp :call gulpVim#Call('gulpVim#Execute', 'e', <f-args>)
 command! -nargs=* -complete=custom,<SID>CompleteTasks GulpExt :call gulpVim#Call('gulpVim#Run', 'c', <f-args>)
 command! GulpTasks :call gulpVim#Call('gulpVim#GetTasks', 'e')
-command! -nargs=? -complete=file GulpFile :call gulpVim#CheckGulpFile(<f-args>)
+command! -nargs=? -complete=file GulpFile :call gulpVim#GulpFile(<f-args>)
 " CTRLP {{{1
 command! CtrlPGulp
 			\ if exists(':CtrlP') ==# 2
@@ -35,7 +35,7 @@ command! CtrlPGulp
 " FUNCTIONS
 " =====================================================================
 function! <SID>CompleteTasks(A, L, P) abort " {{{1
-	if gulpVim#CheckGulpFile(g:gv_default_gulpfile)
+	if gulpVim#GulpFile(g:gv_default_gulpfile)
 		return gulpVim#GetTasks()
 	endif
 endfunction
