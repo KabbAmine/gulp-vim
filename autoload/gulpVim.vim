@@ -117,7 +117,7 @@ function! gulpVim#GetTasks(...) abort " {{{1
 
 	let l:tasks = []
 	for l:line in readfile(g:gv_default_gulpfile)
-		if l:line =~# '^gulp.task'
+		if l:line =~# '\v^\s?gulp.task'
 			" Get task name & add it to a list of tasks
 			let l:task = l:line[match(l:line, "'", 0, 1) + 1 : match(l:line, "'", 0, 2) - 1]
 			call add(l:tasks, l:task)
