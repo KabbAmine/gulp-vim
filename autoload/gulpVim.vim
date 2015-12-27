@@ -1,5 +1,5 @@
 " Creation    : 2015-12-20
-" Last Change : 2015-12-26
+" Last Change : 2015-12-27
 
 " VARIABLES
 " =====================================================================
@@ -111,8 +111,9 @@ function! gulpVim#Run(...) abort " {{{1
 		return printf('silent :!%s', printf(s:shell.cmd[s:os.name], l:gc))
 	endif
 endfunction
-function! gulpVim#GetTasks() abort " {{{1
+function! gulpVim#GetTasks(...) abort " {{{1
 	" Return task names as strings from gulpfile
+	" Echo msg if a:1 exists
 
 	let l:tasks = []
 	for l:line in readfile(g:gv_default_gulpfile)
@@ -122,8 +123,10 @@ function! gulpVim#GetTasks() abort " {{{1
 			call add(l:tasks, l:task)
 		endif
 	endfor
-	let l:taskMsg = len(l:tasks) ==# 1 ? '(1 task)' : '(' . len(l:tasks) . ' tasks)'
-	echohl Title | echo '"'. g:gv_default_gulpfile . '" ' . l:taskMsg . ':' | echohl None
+	if exists('a:1')
+		let l:taskMsg = len(l:tasks) ==# 1 ? '(1 task)' : '(' . len(l:tasks) . ' tasks)'
+		echohl Title | echo '"'. g:gv_default_gulpfile . '" ' . l:taskMsg . ':' | echohl None
+	endif
 	return join(l:tasks, "\n")
 endfunction
 function! gulpVim#Call(funcRef, action, ...) abort " {{{1
