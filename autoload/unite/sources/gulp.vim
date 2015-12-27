@@ -14,13 +14,8 @@ let s:gulp_unite_source = {
 	\ 'default_action': {'common': 'execute'}
 	\ }
 
-" TODO consider refactor (same as CtrlP gulp task gathering)
 function! s:getGulpTasks()
-	let l:gt = ''
-	redir => l:gt
-	silent execute ':GulpTasks'
-	redir END
-	return split(l:gt, "\n")[1:]
+	return split(gulpVim#GetTasks(), "\n")
 endfunction
 
 " gather candidates

@@ -22,11 +22,7 @@ else
 endif
 
 function! ctrlp#gulp#init()
-	let l:gt = ''
-	redir => l:gt
-	silent execute ':GulpTasks'
-	redir END
-	return split(l:gt, "\n")[1:]
+	return split(gulpVim#GetTasks(), "\n")
 endfunc
 
 function! ctrlp#gulp#accept(mode, str)
