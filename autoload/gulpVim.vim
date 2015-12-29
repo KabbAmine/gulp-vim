@@ -1,5 +1,5 @@
 " Creation    : 2015-12-20
-" Last Change : 2015-12-27
+" Last Change : 2015-12-29
 
 " VARIABLES
 " =====================================================================
@@ -116,6 +116,9 @@ function! gulpVim#GetTasks(...) abort " {{{1
 	" Echo msg if a:1 exists
 
 	let l:tasks = []
+	if !gulpVim#GulpFile(g:gv_default_gulpfile)
+		return 0
+	endif
 	for l:line in readfile(g:gv_default_gulpfile)
 		if l:line =~# '\v^\s?gulp.task'
 			" Get task name & add it to a list of tasks
