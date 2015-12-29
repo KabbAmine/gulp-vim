@@ -32,7 +32,7 @@ e.g with [Vim-plug](https://github.com/junegunn/vim-plug)
 Plug 'KabbAmine/gulp-vim'
 ```
 
-This is not mandatory, but the plugin can use [Tpope's Dispatch plugin](https://github.com/tpope/vim-dispatch) if its installed (**P.S:** This integration will be removed in the future versions, the `g:gv_custom_cmd` is a better choice).
+This is not mandatory, but the plugin can use [Tpope's Dispatch plugin](https://github.com/tpope/vim-dispatch) if its installed (**P.S:** This integration will be removed in 1.0.0, the `g:gv_custom_cmd` is a better choice).
 
 Usage
 ---------
@@ -52,7 +52,7 @@ Both commands accept 0 or many arguments (Task name(s)), that can be [completed]
 * The command `GulpExt` by default executes gulp in an external terminal:
   - The default one via `exo-open` in GNU/Linux or a simple `cmd` in Windows.
   - Use a defined user command.
-  - Use [Dispatch](#dispatch) if its installed (WILL BE REMOVED).
+  - Use [Dispatch](#dispatch) if its installed (WILL BE REMOVED IN 1.0.0).
 
   **===> Unix only:** (G)Vim doesn't lose focus if [wmctrl](https://sites.google.com/site/tstyblo//wmctrl/) is installed.
 
@@ -139,7 +139,7 @@ Note that the gulpfile can be dynamically defined using the command `GulpFile`.
 
 ### Use dispatch <a id="dispatch"></a>
 
-**THIS INTEGRATION WILL BE REMOVED IN THE FUTURE VERSIONS**
+**THIS INTEGRATION WILL BE REMOVED IN 1.0.0**
 
 By default if the plugin Dispatch is installed, the command `GulpExt` will use `Start!` to execute Gulp, this means:
 

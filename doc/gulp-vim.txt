@@ -82,7 +82,7 @@ Execute `Gulp` inside Vim, with given task name(s) (If no task name was given
 Open an external terminal:
     * The default one via `exo-open` in GNU/Linux and a simple `cmd` in Windows
     * Use a defined user command.
-    * Use [Dispatch](#dispatch) if its installed (WILL BE REMOVED).
+    * Use [Dispatch](#dispatch) if its installed (WILL BE REMOVED IN 1.0.0).
 
 On Unix, if wmctrl is installed the focus from the editor will not be lost.
 
@@ -153,7 +153,7 @@ Note that the gulpfile can be dynamically defined using the command `GulpFile`.
 
 USE DISPATCH                                    *gulp-vim-configuration:dispatch*
 
-**THIS INTEGRATION WILL BE REMOVED IN THE FUTURE VERSIONS**
+**THIS INTEGRATION WILL BE REMOVED IN 1.0.0**
 
 By default if the plugin Dispatch is installed, the command `GulpExt` will use
 `Start!` to execute Gulp, this means:
