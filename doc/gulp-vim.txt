@@ -1,6 +1,6 @@
 *gulp-vim*      Simply Gulp from Vim
 
-For Vim version 7.0 and above       Last change: 2015-12-21
+For Vim version 7.0 and above       Last change: 2015-12-29
 
     GULP-VIM - FULL-SCREEN MODE FOR VIM IN GNU/LINUX~
                                         from Kabbaj Amine~
@@ -28,13 +28,14 @@ License : This file is placed in the public domain.
   4.6. Unite default command                    |gulp-vim-configuration:unite|
   4.7. Custom command                           |gulp-vim-configuration:custom|
 5. Extra                                        |gulp-vim-extra|
-  5.1. Completion                               |gulp-vim-extra:completion|
+  5.1. Gulpfile detection                       |gulp-vim-extra:gulpfile-detection|
+  5.2. Completion                               |gulp-vim-extra:completion|
 6. NOTES                                        |gulp-vim-notes|
 
 --------------------------------------------------------------------------------
 DESCRIPTION                                     *gulp-vim-description*
 
-This plugin is a simple gulp (http://gulpjs.com) wrapper for vim (Tested on GNU/Linux and Windows)
+This plugin is a simple gulp (http://gulpjs.com) wrapper for vim.
 
 Features
     * Run gulp inside Vim.
@@ -44,13 +45,15 @@ Features
     * Support different gulpfiles (`.js`, `.babel.js`, `.coffee`).
     * [CtrlP](https://github.com/ctrlpvim/ctrlp.vim) integration.
     * [Unite](https://github.com/shougo/unite.vim) source.
+    * Works on GNU/Linux and Windows.
 
 --------------------------------------------------------------------------------
 INSTALLATION                                    *gulp-vim-installation*
 
 # MANUALLY
 
-Install the distributed files into Vim runtime directory which is usually `~/.vim/`, or `$HOME/vimfiles` on Windows.
+Install the distributed files into Vim runtime directory which is usually
+`~/.vim/`, or `$HOME/vimfiles` on Windows.
 
 # USING A PLUGIN MANAGER
 
@@ -66,11 +69,13 @@ USAGE                                           *gulp-vim-usage*
 MAIN COMMANDS                                   *gulp-vim-usage:main*
 
 Gulp-vim provides 2 main commands: `Gulp` and `GulpExt`.
-Both commands accept 0 or many arguments (Task name(s)), that can be completed using `<Tab>`).
+Both commands accept 0 or many arguments (Task name(s)), that can be completed
+using `<Tab>`).
 >
   Gulp {task(s)...}
 <
-Execute `Gulp` inside Vim, with given task name(s) (If no task name was given `default` is used).
+Execute `Gulp` inside Vim, with given task name(s) (If no task name was given
+`default` is used).
 >
   GulpExt {task(s)...}
 <
@@ -99,17 +104,24 @@ MISC                                            *gulp-vim-usage:misc*
 
 Shows a list of your gulp task names (Extracted from the current `gulpfile`).
 >
-  GulpFile [gulpfile]
+  " gulpfile.js by default
+  GulpFile [path/to/gulpfile | gulpfile]
 
-Define the `gulpfile` to use, e.g. `gulpfile.js`, `gulpfile.coffee`, `gulpfile.babel.js` (Set it to `gulpfile.js` when used without argument).
-In fact, this command just assign a value to `g:gv_default_gulpfile`.
+Set the gulpfile to use (Can be a name: `gulpfile.coffee`, `gulpfile.babel.js`,
+or a(n) absolute/relative path to a gulpfile).
+
+When `GulpFile` is used without argument, it set back its value to the default
+one: `gulpfile.js`.
+(In fact, this command just assign a value to `g:gv_default_gulpfile`).
 
 --------------------------------------------------------------------------------
 CONFIGURATION                                   *gulp-vim-configuration*
 
 RVM HACK                                        *gulp-vim-configuration:rvm_hack*
 
-If you're using rvm (https://rvm.io/) in GNU/Linux, when using `GulpExt or a custom command, rvm shell functions may not be exported so your gems and some gulp plugins will not work (`gulp-compass` as an example).
+If you're using rvm (https://rvm.io/) in GNU/Linux, when using `GulpExt or a
+custom command, rvm shell functions may not be exported so your gems and some
+gulp plugins will not work (`gulp-compass` as an example).
 
 To get rid of that add to your vimrc:
 >
@@ -117,8 +129,10 @@ To get rid of that add to your vimrc:
 <
 GO BACK TO THE SHELL PROMPT                     *gulp-vim-configuration:shell_prompt*
 
-By default with `GulpExt`, when the gulp task is completed, the terminal is closed.
-If you want to go back to the shell prompt after executing the task, add to your vimrc:
+By default with `GulpExt`, when the gulp task is completed, the terminal is
+closed.
+If you want to go back to the shell prompt after executing the task, add to your
+vimrc:
 >
   let g:gv_return_2_prompt = 1
 <
@@ -126,7 +140,8 @@ If you are using a custom command it will not work.
 
 SPECIFY GULPFILE                                *gulp-vim-configuration:gulpfile*
 
-You can specify the gulpfile to use with `g:gv_default_gulpfile` variable (By default, it's `gulpfile.js`).
+If needed, you can specify the gulpfile to use with `g:gv_default_gulpfile`
+variable (By default, it's `gulpfile.js`).
 
 e.g.
 >
@@ -134,11 +149,14 @@ e.g.
   " Or
   let g:gv_default_gulpfile = 'gulpfile.babel.js'
 
+Note that the gulpfile can be dynamically defined using the command `GulpFile`.
+
 USE DISPATCH                                    *gulp-vim-configuration:dispatch*
 
 **THIS INTEGRATION WILL BE REMOVED IN THE FUTURE VERSIONS**
 
-By default if the plugin Dispatch is installed, the command `GulpExt` will use `Start!` to execute Gulp, this means:
+By default if the plugin Dispatch is installed, the command `GulpExt` will use
+`Start!` to execute Gulp, this means:
 
 * In Linux: If you're in tmux, a new window will be created otherwise the default terminal will be open.
 * In Windows: A minimized cmd.exe window is spawned.
@@ -155,7 +173,8 @@ You can specify which gulp-vim command to use with `CtrlpGulp` (`Gulp` by defaul
 <
 UNITE DEFAULT COMMAND                           *gulp-vim-configuration:unite*
 
-You can specify which gulp-vim command to use with `gulp` Unite source action (`Gulp` by default)):
+You can specify which gulp-vim command to use with `gulp` Unite source action
+(`Gulp` by default)):
 >
     let g:gv_unite_cmd = 'GulpExt'
 <
@@ -163,14 +182,17 @@ CUSTOM COMMAND                                  *gulp-vim-configuration:custom*
 
 You can specify a custom command to use with `GulpExt` via `g:gv_custom_cmd`.
 
-This variable can be a list or a string where `%s` will be replaced by the adequate shell command.
-It can be a vim command (If you want to use external vim plugin) or a shell command.
+This variable can be a list or a string where `%s` will be replaced by the
+adequate shell command.
+It can be a vim command (If you want to use external vim plugin) or a shell
+command.
 
 e.g using `Dispatch`: >
 
     let g:gv_custom_cmd = 'Start! %s'
 
-Be aware that the gulp shell command can contain double quotes, so if you need to escape them use a list instead of a string and define its 2nd element to 1.
+Be aware that the gulp shell command can contain double quotes, so if you need
+to escape them use a list instead of a string and define its 2nd element to 1.
 
 e.g using [Vimux](https://github.com/benmills/vimux) plugin: >
 
@@ -179,10 +201,20 @@ e.g using [Vimux](https://github.com/benmills/vimux) plugin: >
 --------------------------------------------------------------------------------
 |EXTRA|                                           *gulp-vim-extra*
 
+|GULPFILE_DETECTION|                              *gulp-vim-extra:gulpfile-detection*
+
+By default, when one of the main commands is executed, the plugin searches for a
+`gulpfile.js` file (Or the one defined by either `g:gv_default_gulpfile` or the
+command `GulpFile`) in the following order:
+
+1. In the current vim working directory (`pwd`).
+2. Traverse up from the cwd.
+3. Traverse up from the current file directory.
+
 COMPLETION                                      *gulp-vim-extra:completion*
 
-The plugin searches for a gulpfile (`g:gv_default_gulpfile`) in the current vim directory (`:pwd`)
-then extract from it task names to provide command completion.
+The plugin parse and extract task names from the gulpfile to provide command
+completion (This method is quicker than using `gulp --tasks-simple`).
 
 --------------------------------------------------------------------------------
 NOTES                                           *gulp-vim-notes*

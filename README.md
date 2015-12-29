@@ -7,7 +7,6 @@ Description
 -----------
 
 This plugin is a simple [gulp](http://gulpjs.com) wrapper for vim.
-*(Works on GNU/Linux and Windows)*
 
 ![gulp-vim](.img/gulp-vim.gif "gulp-vim plugin usage")
 
@@ -20,6 +19,7 @@ This plugin is a simple [gulp](http://gulpjs.com) wrapper for vim.
 * Support different gulpfiles (`.js`, `.babel.js`, `.coffee`).
 * [CtrlP](https://github.com/ctrlpvim/ctrlp.vim) integration.
 * [Unite](https://github.com/shougo/unite.vim) source.
+* Works on GNU/Linux and Windows.
 
 Installation
 -----------
@@ -85,17 +85,18 @@ A `gulp` Unite source is provided, see [configuration](#unite).
 :GulpTasks
 ```
 
-Shows a list of your gulp task names (Extracted from the current `gulpfile`).
-
-```
-:GulpFile [gulpfile]
-```
-
-Define the `gulpfile` to use, e.g. `gulpfile.js`, `gulpfile.coffee`, `gulpfile.babel.js` (Set it to `gulpfile.js` when used without argument).
-
-In fact, this command just assign a value to `g:gv_default_gulpfile`.
+Shows a list of your gulp task names (Extracted from the current `g:gv_default_gulpfile`).
 
 ---------------------------
+
+```
+:GulpFile [path/to/gulpfile | gulpfile]		" gulpfile.js by default
+```
+
+Set the gulpfile to use (Can be a name: `gulpfile.coffee`, `gulpfile.babel.js`, or a(n) absolute/relative path to a gulpfile).
+
+When `GulpFile` is used without argument, it set back its value to the default one: `gulpfile.js`.
+(In fact, this command just assign a value to `g:gv_default_gulpfile`).
 
 Configuration
 ---------
@@ -125,7 +126,7 @@ let g:gv_return_2_prompt = 1
 
 ### Specify the gulpfile
 
-You can specify the gulpfile to use with `g:gv_default_gulpfile` variable (By default, it's `gulpfile.js`).
+If needed, you can specify the gulpfile to use with `g:gv_default_gulpfile` variable (By default, it's `gulpfile.js`).
 
 e.g.
 ```
@@ -134,7 +135,7 @@ let g:gv_default_gulpfile = 'gulpfile.coffee'
 let g:gv_default_gulpfile = 'gulpfile.babel.js'
 ```
 
-**P.S:** The paths are not considered.
+Note that the gulpfile can be dynamically defined using the command `GulpFile`.
 
 ### Use dispatch <a id="dispatch"></a>
 
@@ -191,11 +192,17 @@ More examples can be found on the [wiki](https://github.com/KabbAmine/gulp-vim/w
 Extra
 ------
 
+### Gulpfile detection
+
+By default, when one of the main commands is executed, the plugin searches for a `gulpfile.js` file (Or the one defined by either `g:gv_default_gulpfile` or the command `GulpFile`) in the following order:
+
+1. In the current vim working directory (`pwd`).
+2. Traverse up from the cwd.
+3. Traverse up from the current file directory.
+
 ### Completion <a id="completion"></a>
 
-Gulp-vim searches for a *gulpfile* (`g:gv_default_gulpfile`) in the current vim directory (`:pwd`) then extract from it task names to provide command completion (This method is quicker than using `gulp --tasks-simple`).
-
-This may change a little in the future versions, see #2.
+The plugin parse and extract task names from the gulpfile to provide command completion (This method is quicker than using `gulp --tasks-simple`).
 
 TODO
 -----
