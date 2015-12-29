@@ -3,6 +3,17 @@ CHANGELOG
 
 Starting from version `0.8.0` the plugin uses [semantic versionning 2.0.0](http://semver.org/).
 
+0.8.4 <small>(2015-12-29)</small>
+------------------------------
+
+* More refactoring
+* Improve the way the plugin detects & sets the gulpfile
+* Simplify task names gathering for plugin(s) integration
+* Take in account whitespace characters before task names
+* Fix: Get task names only if a gulpfile is found
+
+------------------------------
+
 0.8.3 <small>(2015-12-21)</small>
 ------------------------------
 

@@ -1,7 +1,7 @@
 " A simple gulp wrapper for vim
-" Version     : 0.8.1
+" Version     : 0.8.4
 " Creation    : 2015-03-18
-" Last Change : 2015-12-27
+" Last Change : 2015-12-29
 " Maintainer  : Kabbaj Amine <amine.kabb@gmail.com>
 " License     : This file is placed in the public domain.
 
