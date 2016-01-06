@@ -17,8 +17,9 @@ This plugin is a simple [gulp](http://gulpjs.com) wrapper for vim.
 * Run gulp using a custom shell or vim command.
 * List your gulp tasks.
 * Support different gulpfiles (`.js`, `.babel.js`, `.coffee`).
-* [CtrlP](https://github.com/ctrlpvim/ctrlp.vim) integration.
-* [Unite](https://github.com/shougo/unite.vim) source.
+* [CtrlP](https://github.com/ctrlpvim/ctrlp.vim) integration provided.
+* [Unite](https://github.com/shougo/unite.vim) source provided.
+* Use your own fuzzy finder plugin.
 * Works on GNU/Linux and Windows.
 
 Installation
@@ -78,6 +79,11 @@ A `gulp` Unite source is provided, see [configuration](#unite).
 ```
 :Unite -buffer-name=gulp gulp
 ```
+
+### Use another fuzzy finder plugin
+
+Its quite simple to use your favourite fuzzy finder plugin, all what you need is `gulpVim#GetTasks()` function.
+Some examples in the [wiki](https://github.com/KabbAmine/gulp-vim/wiki/Integrate-with-fuzzy-finder-plugins).
 
 ### Misc
 
