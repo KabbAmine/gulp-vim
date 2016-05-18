@@ -15,7 +15,8 @@ let s:gulp_unite_source = {
 	\ }
 
 function! s:getGulpTasks()
-	return split(gulpVim#GetTasks(), "\n")
+	let l:tasks = gulpVim#GetTasks()
+	return !empty(l:tasks) ? split(l:tasks, "\n") : []
 endfunction
 
 " gather candidates
