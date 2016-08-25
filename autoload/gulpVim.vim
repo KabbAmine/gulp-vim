@@ -10,10 +10,17 @@ let s:os = {
 			\ 'and'       : (has('unix') ? '&&'   : '&'),
 			\ 'root'      : (has('unix') ? '^/'   : '^\a:')
 		\ }
+
+" Default gulp command {{{1
+if !exists('g:gv_default_gulp_cmd')
+	let g:gv_default_gulp_cmd = 'gulp'
+endif
+
 " Default gulpfile {{{1
 if !exists('g:gv_default_gulpfile')
 	let g:gv_default_gulpfile = 'gulpfile.js'
 endif
+
 " Specific plugin integrations {{{1
 " Gulp command to use with CtrlP
 if !exists('g:gv_ctrlp_cmd')
@@ -29,6 +36,7 @@ if !exists('g:gv_use_dispatch')
 	let g:gv_use_dispatch = 1
 endif
 " ===========================================
+
 " A dictionnary for the shell command {{{1
 let s:shell = {}
 " Add --no-color flag if GUI vim is used
@@ -67,6 +75,7 @@ function! gulpVim#GulpFile(...) abort "{{{1
 	endif
 	return 0
 endfunction
+
 function! gulpVim#SetCustomCommand(custom, gulp) abort " {{{1
 	" Return parsed custom command (If custom[1] == 1, escape double
 	" quotes in gulp command).
@@ -83,14 +92,17 @@ function! gulpVim#SetCustomCommand(custom, gulp) abort " {{{1
 		endif
 	endif
 endfun
+
 function! gulpVim#Execute(...) abort " {{{1
 	" Return gulp execution with given param(s) as task name(s) (By default is 'default' :D)
 
 	let l:tasks = a:0 >=# 1 ? join(a:000, ' ') : 'default'
 	echohl Title | echo 'Execute task(s) -> ' . l:tasks . ':' | echohl None
 	let l:flags = printf('--gulpfile %s %s', shellescape(g:gv_default_gulpfile), s:shell.flags)
-	return system(printf('%s gulp %s %s', s:shell.rvm, l:tasks, l:flags))
+	"return system(printf('%s %s %s %s', s:shell.rvm, g:gv_default_gulp_cmd, l:tasks, l:flags))
+	execute printf('!%s %s %s %s', s:shell.rvm, g:gv_default_gulp_cmd, l:tasks, l:flags)
 endfunction
+
 function! gulpVim#Run(...) abort " {{{1
 	" Return parsed gulp execution command with given param(s) as task name(s)
 	" in external terminal.
@@ -99,7 +111,7 @@ function! gulpVim#Run(...) abort " {{{1
 	let l:flags = '--gulpfile ' . shellescape(g:gv_default_gulpfile)
 	let l:focus = has('unix') && executable('wmctrl') && v:windowid !=# 0 ?
 				\ 'wmctrl -ia ' . v:windowid . ';' : ''
-	let l:gc = printf('%s %s gulp %s %s', l:focus, s:shell.rvm, l:tasks, l:flags)
+	let l:gc = printf('%s %s %s %s %s', l:focus, s:shell.rvm, g:gv_default_gulp_cmd, l:tasks, l:flags)
 	if exists('g:gv_custom_cmd')
 		return gulpVim#SetCustomCommand(g:gv_custom_cmd, l:gc)
 	" WILL BE REMOVED ===========================
@@ -107,10 +119,11 @@ function! gulpVim#Run(...) abort " {{{1
 		return printf('Start! %s', l:gc)
 	" ===========================================
 	else
-		let l:gc = escape(printf('%s gulp %s %s', l:focus, l:tasks, l:flags), '"')
+		let l:gc = escape(printf('%s %s %s %s', l:focus, g:gv_default_gulp_cmd, l:tasks, l:flags), '"')
 		return printf('silent :!%s', printf(s:shell.cmd[s:os.name], l:gc))
 	endif
 endfunction
+
 function! gulpVim#GetTasks(...) abort " {{{1
 	" Return task names as strings from gulpfile
 	" Echo msg if a:1 exists
@@ -132,6 +145,7 @@ function! gulpVim#GetTasks(...) abort " {{{1
 	endif
 	return join(l:tasks, "\n")
 endfunction
+
 function! gulpVim#Call(funcRef, action, ...) abort " {{{1
 	" Automate the vim command creation:
 	"	- Check if gulpfile is readable
