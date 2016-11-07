@@ -1,5 +1,5 @@
 " Creation    : 2015-12-20
-" Last Change : 2015-12-29
+" Last Change : 2016-11-07
 
 " VARIABLES
 " =====================================================================
@@ -10,41 +10,20 @@ let s:os = {
 			\ 'and'       : (has('unix') ? '&&'   : '&'),
 			\ 'root'      : (has('unix') ? '^/'   : '^\a:')
 		\ }
-" Default gulpfile {{{1
-if !exists('g:gv_default_gulpfile')
-	let g:gv_default_gulpfile = 'gulpfile.js'
-endif
-" Specific plugin integrations {{{1
-" Gulp command to use with CtrlP
-if !exists('g:gv_ctrlp_cmd')
-	let g:gv_ctrlp_cmd = 'Gulp'
-endif
-" Gulp command to use with Unite
-if !exists('g:gv_unite_cmd')
-	let g:gv_unite_cmd = 'Gulp'
-endif
-" WILL BE REMOVED ===========================
-" Use Dispatch plugin (Enabled by default)
-if !exists('g:gv_use_dispatch')
-	let g:gv_use_dispatch = 1
-endif
-" ===========================================
 " A dictionnary for the shell command {{{1
 let s:shell = {}
-" Add --no-color flag if GUI vim is used
 let s:shell.flags = has('gui_running') ? '--no-color' : ''
-" Source rvm in Unix (Disabled by default)
-let s:shell.rvm = exists('g:gv_rvm_hack') && g:gv_rvm_hack && has('unix') ? '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" &&' : ''
-" Return to prompt option
-let s:shell.prompt = (exists('g:gv_return_2_prompt')) ?
+let s:shell.rvm = g:gv_rvm_hack && has('unix') ?
+			\	'[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" &&' :
+			\	''
+let s:shell.prompt = g:gv_return_2_prompt ?
 			\ {'unix': ' exec bash', 'win32': ' /k' } :
 			\ {'unix': '', 'win32': ' /c'}
-" Full shell command for executing external terminal
 let s:shell.cmd = {
 			\ 'unix' : 'exo-open --launch TerminalEmulator bash -c "' . s:shell.rvm . ' %s ; ' . s:shell.prompt.unix . '" &',
 			\ 'win32': 'start cmd ' . s:shell.prompt.win32 . ' %s &'
 		\ }
-" }}}
+" 1}}}
 
 " FUNCTIONS
 " =====================================================================

@@ -1,7 +1,7 @@
 " A simple gulp wrapper for vim
 " Version     : 0.8.4
 " Creation    : 2015-03-18
-" Last Change : 2015-12-29
+" Last Change : 2016-11-07
 " Maintainer  : Kabbaj Amine <amine.kabb@gmail.com>
 " License     : This file is placed in the public domain.
 
@@ -17,6 +17,21 @@ let s:saveCpoptions = &cpoptions
 set fileformat=unix
 set cpoptions&vim
 " }}}
+
+" OPTIONS
+" =====================================================================
+" Default gulpfile {{{1
+let g:gv_default_gulpfile = get(g:, 'gv_default_gulpfile', 'gulpfile.js')
+" Close terminal after task execution {{{1
+let g:gv_return_2_prompt = get(g:, 'return_2_prompt', 0)
+" Source rvm before executing a task {{{1
+let g:gv_rvm_hack = get(g:, 'gv_rvm_hack', 0)
+" Plugin integrations {{{1
+let g:gv_ctrlp_cmd = get(g:, 'gv_ctrlp_cmd', 'Gulp')
+let g:gv_unite_cmd = get(g:, 'gv_unite_cmd', 'Gulp')
+" N.B: Will be removed in 1.0
+let g:gv_use_dispatch = get(g:, 'gv_use_dispatch', 1)
+" 1}}}
 
 " COMMANDS
 " =====================================================================
