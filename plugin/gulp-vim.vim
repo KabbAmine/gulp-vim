@@ -50,9 +50,7 @@ command! CtrlPGulp
 " FUNCTIONS
 " =====================================================================
 function! <SID>CompleteTasks(A, L, P) abort " {{{1
-	if gulpVim#GulpFile(g:gv_default_gulpfile)
-		return gulpVim#GetTasks()
-	endif
+	return gulpVim#GulpFile(g:gv_default_gulpfile) ? gulpVim#GetTasks() : ''
 endfunction
 " }}}
 
